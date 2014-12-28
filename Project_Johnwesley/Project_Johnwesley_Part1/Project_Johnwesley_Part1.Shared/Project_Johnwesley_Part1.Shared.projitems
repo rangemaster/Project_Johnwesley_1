@@ -19,5 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Method2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\RMHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings.cs" />
   </ItemGroup>
 </Project>

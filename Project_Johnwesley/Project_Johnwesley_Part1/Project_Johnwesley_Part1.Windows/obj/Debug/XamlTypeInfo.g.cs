@@ -124,8 +124,8 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[9];
-            _typeNameTable[0] = "Project_Johnwesley_Part1.FirstPage";
+            _typeNameTable = new string[10];
+            _typeNameTable[0] = "Project_Johnwesley_Part1.AboutPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
             _typeNameTable[3] = "Project_Johnwesley_Part1.Common.ObservableDictionary";
@@ -133,10 +133,11 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
             _typeNameTable[5] = "String";
             _typeNameTable[6] = "Project_Johnwesley_Part1.Common.NavigationHelper";
             _typeNameTable[7] = "Windows.UI.Xaml.DependencyObject";
-            _typeNameTable[8] = "Project_Johnwesley_Part1.MainPage";
+            _typeNameTable[8] = "Project_Johnwesley_Part1.FirstPage";
+            _typeNameTable[9] = "Project_Johnwesley_Part1.MainPage";
 
-            _typeTable = new global::System.Type[9];
-            _typeTable[0] = typeof(global::Project_Johnwesley_Part1.FirstPage);
+            _typeTable = new global::System.Type[10];
+            _typeTable[0] = typeof(global::Project_Johnwesley_Part1.AboutPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
             _typeTable[3] = typeof(global::Project_Johnwesley_Part1.Common.ObservableDictionary);
@@ -144,7 +145,8 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
             _typeTable[5] = typeof(global::System.String);
             _typeTable[6] = typeof(global::Project_Johnwesley_Part1.Common.NavigationHelper);
             _typeTable[7] = typeof(global::Windows.UI.Xaml.DependencyObject);
-            _typeTable[8] = typeof(global::Project_Johnwesley_Part1.MainPage);
+            _typeTable[8] = typeof(global::Project_Johnwesley_Part1.FirstPage);
+            _typeTable[9] = typeof(global::Project_Johnwesley_Part1.MainPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -179,9 +181,10 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_FirstPage() { return new global::Project_Johnwesley_Part1.FirstPage(); }
+        private object Activate_0_AboutPage() { return new global::Project_Johnwesley_Part1.AboutPage(); }
         private object Activate_3_ObservableDictionary() { return new global::Project_Johnwesley_Part1.Common.ObservableDictionary(); }
-        private object Activate_8_MainPage() { return new global::Project_Johnwesley_Part1.MainPage(); }
+        private object Activate_8_FirstPage() { return new global::Project_Johnwesley_Part1.FirstPage(); }
+        private object Activate_9_MainPage() { return new global::Project_Johnwesley_Part1.MainPage(); }
         private void MapAdd_3_ObservableDictionary(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.String, global::System.Object>)instance;
@@ -200,9 +203,9 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
             switch (typeIndex)
             {
 
-            case 0:   //  Project_Johnwesley_Part1.FirstPage
+            case 0:   //  Project_Johnwesley_Part1.AboutPage
                 userType = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_0_FirstPage;
+                userType.Activator = Activate_0_AboutPage;
                 userType.AddMemberName("DefaultViewModel");
                 userType.AddMemberName("NavigationHelper");
                 userType.SetIsLocalType();
@@ -244,9 +247,18 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
                 xamlType = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 8:   //  Project_Johnwesley_Part1.MainPage
+            case 8:   //  Project_Johnwesley_Part1.FirstPage
                 userType = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_8_MainPage;
+                userType.Activator = Activate_8_FirstPage;
+                userType.AddMemberName("DefaultViewModel");
+                userType.AddMemberName("NavigationHelper");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 9:   //  Project_Johnwesley_Part1.MainPage
+                userType = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_9_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -255,12 +267,22 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
         }
 
 
-        private object get_0_FirstPage_DefaultViewModel(object instance)
+        private object get_0_AboutPage_DefaultViewModel(object instance)
+        {
+            var that = (global::Project_Johnwesley_Part1.AboutPage)instance;
+            return that.DefaultViewModel;
+        }
+        private object get_1_AboutPage_NavigationHelper(object instance)
+        {
+            var that = (global::Project_Johnwesley_Part1.AboutPage)instance;
+            return that.NavigationHelper;
+        }
+        private object get_2_FirstPage_DefaultViewModel(object instance)
         {
             var that = (global::Project_Johnwesley_Part1.FirstPage)instance;
             return that.DefaultViewModel;
         }
-        private object get_1_FirstPage_NavigationHelper(object instance)
+        private object get_3_FirstPage_NavigationHelper(object instance)
         {
             var that = (global::Project_Johnwesley_Part1.FirstPage)instance;
             return that.NavigationHelper;
@@ -273,16 +295,28 @@ namespace Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo
 
             switch (longMemberName)
             {
+            case "Project_Johnwesley_Part1.AboutPage.DefaultViewModel":
+                userType = (global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Project_Johnwesley_Part1.AboutPage");
+                xamlMember = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "Project_Johnwesley_Part1.Common.ObservableDictionary");
+                xamlMember.Getter = get_0_AboutPage_DefaultViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "Project_Johnwesley_Part1.AboutPage.NavigationHelper":
+                userType = (global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Project_Johnwesley_Part1.AboutPage");
+                xamlMember = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlMember(this, "NavigationHelper", "Project_Johnwesley_Part1.Common.NavigationHelper");
+                xamlMember.Getter = get_1_AboutPage_NavigationHelper;
+                xamlMember.SetIsReadOnly();
+                break;
             case "Project_Johnwesley_Part1.FirstPage.DefaultViewModel":
                 userType = (global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Project_Johnwesley_Part1.FirstPage");
                 xamlMember = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "Project_Johnwesley_Part1.Common.ObservableDictionary");
-                xamlMember.Getter = get_0_FirstPage_DefaultViewModel;
+                xamlMember.Getter = get_2_FirstPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Project_Johnwesley_Part1.FirstPage.NavigationHelper":
                 userType = (global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Project_Johnwesley_Part1.FirstPage");
                 xamlMember = new global::Project_Johnwesley_Part1.Project_Johnwesley_Part1_Windows_XamlTypeInfo.XamlMember(this, "NavigationHelper", "Project_Johnwesley_Part1.Common.NavigationHelper");
-                xamlMember.Getter = get_1_FirstPage_NavigationHelper;
+                xamlMember.Getter = get_3_FirstPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             }

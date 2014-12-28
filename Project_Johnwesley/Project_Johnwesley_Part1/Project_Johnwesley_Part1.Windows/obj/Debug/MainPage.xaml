@@ -16,7 +16,10 @@
             <TextBlock x:Name="Title_tx" Text="Title" FontSize="48" FontFamily="Comic Sans MS"/>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:ConnectionId='1' x:Name="First_Page_bn" Content="First Page"                             FontSize="32" FontFamily="Comic Sans MS"/>
+            <StackPanel>
+                <Button x:ConnectionId='1' x:Name="First_Page_bn" Content="First Page"                             FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20"/>
+                <Button x:ConnectionId='2' x:Name="Abount_Page_bn" Content="About Page"                              FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
