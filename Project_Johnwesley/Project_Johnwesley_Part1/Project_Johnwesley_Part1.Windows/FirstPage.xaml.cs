@@ -23,7 +23,7 @@ namespace Project_Johnwesley_Part1
 
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
-
+        private Logic _Logic = null;
         public FirstPage()
         {
             this.InitializeComponent();
@@ -61,7 +61,18 @@ namespace Project_Johnwesley_Part1
         #endregion
 
         #region Logic
+        private void Method1() { Logic.handle(Logic.Method1); }
+        private void Method2() { Logic.handle(Logic.Method2); }
 
+        private Logic Logic
+        {
+            get
+            {
+                if (_Logic == null)
+                { _Logic = new Logic(); }
+                return _Logic;
+            }
+        }
         #endregion
     }
 }
