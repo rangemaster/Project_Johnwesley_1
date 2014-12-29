@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Bill.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Method1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Method2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\RMHandler.cs" />

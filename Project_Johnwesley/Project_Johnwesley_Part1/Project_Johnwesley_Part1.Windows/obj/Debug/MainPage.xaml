@@ -17,8 +17,8 @@
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
-                <Button x:ConnectionId='1' x:Name="First_Page_bn" Content="First Page"                             FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20"/>
-                <Button x:ConnectionId='2' x:Name="Abount_Page_bn" Content="About Page"                              FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20"/>
+                <Button x:ConnectionId='1' x:Name="Bill_Page_bn" Content="Bills"                            FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20" HorizontalAlignment="Center"/>
+                <Button x:ConnectionId='2' x:Name="Abount_Page_bn" Content="About Page"                              FontSize="32" FontFamily="Comic Sans MS" Margin="0,20,0,20" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
     </Grid>
