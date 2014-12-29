@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" >
                 <StackPanel VerticalAlignment="Center">
@@ -73,10 +73,13 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="4">
-                <FlyoutPresenter x:Name="_Edit_Flyout" Height="100">
+                <FlyoutPresenter x:Name="_Edit_Flyout" Height="150" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="_Edit_Field_tx" Text="[Input]" Header="Admin password" FontSize="20" HorizontalAlignment="Center"/>
-                        <Button Content="Enter" Click="Edit_Flyout_Continue_bn"/>
+                        <TextBox x:Name="_Edit_Field_tx" Text="[Input]" Header="Admin password" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap" KeyDown="_Edit_Field_tx_KeyDown"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Content="Enter" Click="Edit_Flyout_Continue_bn"/>
+                            <Button Content="Close" Click="Close_Flyout_Continue_bn"/>
+                        </StackPanel>
                     </StackPanel>
                 </FlyoutPresenter>
             </Grid>

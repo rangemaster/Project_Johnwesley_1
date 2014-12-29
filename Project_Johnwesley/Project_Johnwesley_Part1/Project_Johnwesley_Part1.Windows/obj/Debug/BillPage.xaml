@@ -53,7 +53,7 @@
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1" >
                 <StackPanel VerticalAlignment="Center">
@@ -63,20 +63,23 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="2" VerticalAlignment="Center">
-                <ListBox x:ConnectionId='5' x:Name="Bill_List" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="250"                                              />
+                <ListBox x:ConnectionId='7' x:Name="Bill_List" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="250"                                              />
             </Grid>
             <Grid Grid.Column="3">
                 <StackPanel VerticalAlignment="Center">
-                    <Button x:ConnectionId='2' x:Name="Add_bn" Content="Add"                      FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button x:ConnectionId='3' x:Name="Edit_bn" Content="Edit"                       FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button x:ConnectionId='4' x:Name="Remove_bn" Content="Remove"                         FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <Button x:ConnectionId='4' x:Name="Add_bn" Content="Add"                      FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:ConnectionId='5' x:Name="Edit_bn" Content="Edit"                       FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:ConnectionId='6' x:Name="Remove_bn" Content="Remove"                         FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="4">
-                <FlyoutPresenter x:Name="_Edit_Flyout" Height="100">
+                <FlyoutPresenter x:Name="_Edit_Flyout" Height="150" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="_Edit_Field_tx" Text="[Input]" Header="Admin password" FontSize="20" HorizontalAlignment="Center"/>
-                        <Button x:ConnectionId='1' Content="Enter"                                />
+                        <TextBox x:ConnectionId='1' x:Name="_Edit_Field_tx" Text="[Input]" Header="Admin password" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap"                                 />
+                        <StackPanel VerticalAlignment="Center">
+                            <Button x:ConnectionId='2' Content="Enter"                                />
+                            <Button x:ConnectionId='3' Content="Close"                                 />
+                        </StackPanel>
                     </StackPanel>
                 </FlyoutPresenter>
             </Grid>

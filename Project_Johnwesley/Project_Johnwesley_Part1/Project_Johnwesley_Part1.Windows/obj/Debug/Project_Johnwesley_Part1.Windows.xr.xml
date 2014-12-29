@@ -80,6 +80,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.FlyoutPresenter">
       <RootProperty Name="Height" />
+      <RootProperty Name="Visibility" />
       <RootProperty Name="Content" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
@@ -87,7 +88,9 @@
       <RootProperty Name="Header" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="TextWrapping" />
       <RootProperty Name="Width" />
+      <RootEvent Name="KeyDown" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListBox">
       <RootProperty Name="HorizontalAlignment" />
