@@ -63,7 +63,15 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="2" VerticalAlignment="Center">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:ConnectionId='8' x:Name="_Sort_ABC_bn" Content="ABC"                           />
+                        <Button x:ConnectionId='9' x:Name="_Sort_Euro_bn" Content="Euro"                            />
+                        <Button x:ConnectionId='10' x:Name="_Sort_Date_bn" Content="Date"                            />
+                        <Button x:ConnectionId='11' x:Name="_Sort_Description_bn" Content="..."                                   />
+                    </StackPanel>
                 <ListBox x:ConnectionId='7' x:Name="Bill_List" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="250"                                              />
+                </StackPanel>
             </Grid>
             <Grid Grid.Column="3">
                 <StackPanel VerticalAlignment="Center">
@@ -75,7 +83,7 @@
             <Grid Grid.Column="4">
                 <FlyoutPresenter x:Name="_Edit_Flyout" Height="150" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:ConnectionId='1' x:Name="_Edit_Field_tx" Text="[Input]" Header="Admin password" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap"                                 />
+                        <TextBox x:ConnectionId='1' x:Name="_Edit_Field_tx" Header="Admin password" FontSize="20" HorizontalAlignment="Center" TextWrapping="Wrap"                                 />
                         <StackPanel VerticalAlignment="Center">
                             <Button x:ConnectionId='2' Content="Enter"                                />
                             <Button x:ConnectionId='3' Content="Close"                                 />

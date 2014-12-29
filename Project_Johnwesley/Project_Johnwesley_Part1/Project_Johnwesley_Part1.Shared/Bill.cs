@@ -27,7 +27,9 @@ namespace Project_Johnwesley_Part1
             {
                 this.payer = "Unknown";
                 this.price = 0.0;
-                this.time = new DateTime(2014, 12, 29);
+                string date = DateTime.Now.ToString("yyyy-MM-dd");
+                string[] array = date.Split('-');
+                this.time = new DateTime(int.Parse(array[0].Trim()), int.Parse(array[1].Trim()), int.Parse(array[2].Trim()));
                 this.description = "None";
             }
             public string Payer() { return payer; }

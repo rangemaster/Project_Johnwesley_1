@@ -84,11 +84,11 @@
       <RootProperty Name="Content" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
-      <RootProperty Name="Text" />
       <RootProperty Name="Header" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="TextWrapping" />
+      <RootProperty Name="Text" />
       <RootProperty Name="Width" />
       <RootEvent Name="KeyDown" />
     </RootType>

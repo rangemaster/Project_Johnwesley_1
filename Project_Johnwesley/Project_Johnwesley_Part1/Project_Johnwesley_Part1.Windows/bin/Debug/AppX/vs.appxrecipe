@@ -20,13 +20,13 @@
     <AppXManifest Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-12-29T13:55:59.237</Modified>
+      <Modified>2014-12-29T16:17:08.805</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\Project_Johnwesley_Part1.Windows.exe">
       <PackagePath>Project_Johnwesley_Part1.Windows.exe</PackagePath>
-      <Modified>2014-12-29T14:52:04.071</Modified>
+      <Modified>2014-12-29T17:19:38.179</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\Assets\Logo.scale-100.png">
       <PackagePath>Assets\Logo.scale-100.png</PackagePath>
@@ -50,27 +50,27 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2014-12-29T13:55:58.776</Modified>
+      <Modified>2014-12-29T16:17:08.502</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\AboutPage.xbf">
       <PackagePath>AboutPage.xbf</PackagePath>
-      <Modified>2014-12-29T13:55:58.778</Modified>
+      <Modified>2014-12-29T16:17:08.502</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillPage.xbf">
       <PackagePath>BillPage.xbf</PackagePath>
-      <Modified>2014-12-29T14:50:50.327</Modified>
+      <Modified>2014-12-29T16:41:38.966</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2014-12-29T13:55:58.783</Modified>
+      <Modified>2014-12-29T16:17:08.505</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\Project_Johnwesley_Part1.Windows.xr.xml">
       <PackagePath>Project_Johnwesley_Part1.Windows.xr.xml</PackagePath>
-      <Modified>2014-12-29T14:50:50.295</Modified>
+      <Modified>2014-12-29T15:03:17.319</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2014-12-29T13:55:59.094</Modified>
+      <Modified>2014-12-29T16:17:08.757</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
