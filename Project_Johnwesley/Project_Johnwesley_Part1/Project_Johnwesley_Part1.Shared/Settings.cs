@@ -38,6 +38,18 @@ namespace Project_Johnwesley_Part1
             text += "The application was designed and for Johnwesley van der Wiel." + "\n";
             _AboutText = text;
         }
+        public static string CreateKey(string year, string month)
+        { return year + "_" + month + "Bill_Value_"; }
+        public static string CreateYearKey()
+        { return "Application_YearKey"; }
+        public static string CreateMonthKey(string year)
+        { return year + "_MonthKey"; }
+        #endregion
+        #region Convert Key
+        public static string KeyToTotalMoneyKey(string originalKey)
+        { return originalKey + "TotalMoney"; }
+        public static string KeyToAmountOfBillsKey(string originalKey)
+        { return originalKey + "Amount"; }
         #endregion
     }
 }

@@ -98,7 +98,7 @@
                 </StackPanel>
                 <StackPanel x:Name="_Information_Panel_2" Width="300">
                 </StackPanel>
-                <StackPanel x:Name="_Information_Panel_3" Width="AUTO">
+                <StackPanel x:Name="_Information_Panel_3" Width="700">
                 </StackPanel>
             </StackPanel>
         </Grid>

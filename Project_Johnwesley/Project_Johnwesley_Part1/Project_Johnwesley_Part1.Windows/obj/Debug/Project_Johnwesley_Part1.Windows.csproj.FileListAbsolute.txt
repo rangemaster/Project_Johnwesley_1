@@ -1,5 +1,6 @@
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\App.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\AboutPage.xbf
+C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillOverviewPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\MainPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\Project_Johnwesley_Part1.Windows.xr.xml
@@ -12,6 +13,8 @@ C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\App.g.cs
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\AboutPage.g.i.cs
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\AboutPage.g.cs
+C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillOverviewPage.g.i.cs
+C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillOverviewPage.g.cs
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillPage.g.i.cs
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillPage.g.cs
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\MainPage.g.i.cs
@@ -24,7 +27,9 @@ C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\AboutPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\MainPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\XamlSaveStateFile.xml
+C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillOverviewPage.xaml
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillPage.xaml
+C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillOverviewPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\BillPage.xbf
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\Project_Johnwesley_Part1.Windows.exe
 C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\obj\Debug\Project_Johnwesley_Part1.Windows.pdb

@@ -22,8 +22,9 @@ namespace Project_Johnwesley_Part1
 {
     public sealed partial class BillPage : Page
     {
-        private double _TotalMoney = 2000;
-        private List<Bill> _Bills;
+        private string bill_key = null;
+        private double _TotalMoney = 9999;
+        private List<Bill> _Bills = new List<Bill>();
         private List<TextBox> textBoxes;
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
@@ -42,25 +43,9 @@ namespace Project_Johnwesley_Part1
         private void Init()
         {
             InitPanels();
-            InitBills();
             InitColors();
-            LoadList();
             UpdateCalculation();
             UpdateList();
-        }
-        #endregion
-        #region InitBills
-        private void InitBills()
-        {
-            this._Bills = new List<Bill>();
-            Bill testBill = new Bill.BillBuilder().Payer("John").Price(12).Description("This is an test bill").Build();
-            Bill testBill2 = new Bill.BillBuilder().Payer("Ashley").Price(15).Description("This is an test bill").Build();
-            this._Bills.Add(testBill);
-            this._Bills.Add(testBill2);
-            foreach (Bill bill in _Bills)
-            { Bill_List.Items.Add(bill); }
-            if (Bill_List.Items.Count > 0)
-            { Bill_List.SelectedIndex = 0; }
         }
         #endregion
         #region InitColors
@@ -77,6 +62,7 @@ namespace Project_Johnwesley_Part1
             textBoxes.Add(CreateTextBox("Price"));
             textBoxes.Add(CreateTextBox("Time:"));
             textBoxes.Add(CreateTextBox("Description:"));
+            textBoxes[3].TextWrapping = TextWrapping.Wrap;
             this._Information_Panel_1.Children.Add(textBoxes[0]);
             this._Information_Panel_1.Children.Add(textBoxes[1]);
             this._Information_Panel_2.Children.Add(textBoxes[2]);
@@ -136,7 +122,17 @@ namespace Project_Johnwesley_Part1
         private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
         { }
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        { navigationHelper.OnNavigatedTo(e); }
+        {
+            Tuple<List<Bill>, List<string>> data = (e.Parameter as Tuple<List<Bill>, List<string>>);
+            _Bills = data.Item1;
+            string year = data.Item2[0];
+            string month = data.Item2[1];
+            this._TotalMoney = double.Parse((data.Item2[2] == null ? "0" : data.Item2[2]));
+            this.bill_key = Settings.CreateKey(year, month);
+
+            navigationHelper.OnNavigatedTo(e);
+            UpdateCalculation();
+        }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         { navigationHelper.OnNavigatedFrom(e); }
         public ObservableDictionary DefaultViewModel
@@ -503,14 +499,14 @@ namespace Project_Johnwesley_Part1
         #region Data Handler
         private void SaveList()
         {
-            string key = "Bill_Value_";
+            ApplicationData.Current.LocalSettings.Values[Settings.KeyToTotalMoneyKey(bill_key)] = this._TotalMoney;
             int amountOfBills = 0;
-            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Amount_Of_Bills"))
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(Settings.KeyToAmountOfBillsKey(bill_key)))
             {
-                amountOfBills = (int)ApplicationData.Current.LocalSettings.Values["Amount_Of_Bills"];
+                amountOfBills = (int)ApplicationData.Current.LocalSettings.Values[Settings.KeyToAmountOfBillsKey(bill_key)];
                 for (int i = 0; i < amountOfBills; i++)
-                    if (ApplicationData.Current.LocalSettings.Values.ContainsKey(key + i))
-                        ApplicationData.Current.LocalSettings.Values.Remove(key + i);
+                    if (ApplicationData.Current.LocalSettings.Values.ContainsKey(bill_key + i))
+                        ApplicationData.Current.LocalSettings.Values.Remove(bill_key + i);
             }
             amountOfBills = _Bills.Count;
             for (int i = 0; i < amountOfBills; i++)
@@ -520,39 +516,10 @@ namespace Project_Johnwesley_Part1
                 bill_information[1] = _Bills[i].price.ToString();
                 bill_information[2] = _Bills[i].time.ToString();
                 bill_information[3] = _Bills[i].description;
-                Debug.WriteLine("Saving: " + key + i);
-                ApplicationData.Current.LocalSettings.Values[key + i] = bill_information;
+                Debug.WriteLine("Saving: " + bill_key + i);
+                ApplicationData.Current.LocalSettings.Values[bill_key + i] = bill_information;
             }
-            ApplicationData.Current.LocalSettings.Values["Amount_Of_Bills"] = amountOfBills;
-        }
-        private void LoadList()
-        {
-            string key = "Bill_Value_";
-            List<string[]> data = new List<string[]>();
-            int amountOfBills = 0;
-            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Amount_Of_Bills"))
-                amountOfBills = (int)ApplicationData.Current.LocalSettings.Values["Amount_Of_Bills"];
-
-            for (int i = 0; i < amountOfBills; i++)
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(key + i))
-                {
-                    Debug.WriteLine("Loading: " + key + i);
-                    data.Add((string[])(ApplicationData.Current.LocalSettings.Values[key + i]));
-                }
-
-            if (_Bills.Count > 0)
-                _Bills.Clear();
-            foreach (string[] info in data)
-            {
-                string[] array = info[2].Split('/', ' ');
-                int year = int.Parse(array[2].Trim());
-                int month = int.Parse(array[0].Trim());
-                int day = int.Parse(array[1].Trim());
-
-                Bill bill = CreateBill(info[0].Trim(), info[1].Trim(), year, month, day, info[3].Trim());
-                if (bill != null)
-                    _Bills.Add(bill);
-            }
+            ApplicationData.Current.LocalSettings.Values[Settings.KeyToAmountOfBillsKey(bill_key)] = amountOfBills;
         }
         #endregion
 

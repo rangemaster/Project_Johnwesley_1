@@ -26,10 +26,9 @@ namespace Project_Johnwesley_Part1
         {
             this.InitializeComponent();
         }
+        private void Bill_Page_bn_Click(object sender, RoutedEventArgs e)
+        { this.Frame.Navigate(typeof(BillOverviewPage), e); }
         private void Abount_Page_bn_Click(object sender, RoutedEventArgs e)
         { this.Frame.Navigate(typeof(AboutPage), e); }
-
-        private void Bill_Page_bn_Click(object sender, RoutedEventArgs e)
-        { this.Frame.Navigate(typeof(BillPage), e); }
     }
 }

@@ -41,6 +41,9 @@
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\AboutPage.xbf">
       <PackagePath>AboutPage.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillOverviewPage.xbf">
+      <PackagePath>BillOverviewPage.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillPage.xbf">
       <PackagePath>BillPage.xbf</PackagePath>
     </AppxPackagedFile>
