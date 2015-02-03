@@ -26,7 +26,7 @@
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\Project_Johnwesley_Part1.Windows.exe">
       <PackagePath>Project_Johnwesley_Part1.Windows.exe</PackagePath>
-      <Modified>2015-01-03T19:14:34.365</Modified>
+      <Modified>2015-01-07T15:01:01.299</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\Assets\Logo.scale-100.png">
       <PackagePath>Assets\Logo.scale-100.png</PackagePath>
@@ -58,7 +58,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillOverviewPage.xbf">
       <PackagePath>BillOverviewPage.xbf</PackagePath>
-      <Modified>2015-01-03T19:12:39.286</Modified>
+      <Modified>2015-01-07T15:01:01.092</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Roel Suntjens\Documents\GitHub\Project_Johnwesley_1\Project_Johnwesley\Project_Johnwesley_Part1\Project_Johnwesley_Part1.Windows\bin\Debug\BillPage.xbf">
       <PackagePath>BillPage.xbf</PackagePath>
