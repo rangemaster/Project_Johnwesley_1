@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bill\JBill.cs" />
     <Compile Include="SingleTon\DataHolder.cs" />
     <Compile Include="SingleTon\Settings.cs" />
     <Page Include="MainPage.xaml">
