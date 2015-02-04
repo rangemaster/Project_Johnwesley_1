@@ -82,6 +82,7 @@ namespace BillJazzly.Pages
         private void _Open_bn_Click(object sender, RoutedEventArgs e)
         {
             int state = 0;
+            QuickFix();
             for (int i = 1; i < _Year_stackpanel.Children.Count; i++)
             {
                 if ((_Year_stackpanel.Children[i] as RadioButton).IsChecked == true)
@@ -125,6 +126,12 @@ namespace BillJazzly.Pages
                 { return (_Month_stackpanel.Children[i] as RadioButton).Content.ToString(); }
             }
             return null;
+        }
+        private void QuickFix()
+        {
+            (_Year_stackpanel.Children[1] as RadioButton).IsChecked = true;
+            CheckMonthButtons(int.Parse((_Year_stackpanel.Children[1] as RadioButton).Content.ToString()));
+            (_Month_stackpanel.Children[1] as RadioButton).IsChecked = true;
         }
     }
 }

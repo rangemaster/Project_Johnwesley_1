@@ -21,16 +21,33 @@
         </Style>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="Height" Value="15"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Width" Value="150"/>
-            <Setter Property="Margin" Value="10,10,10,10"/>
             <Setter Property="Height" Value="30"/>
+            <Setter Property="IsEnabled" Value="False"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+        <Style x:Key="TotalField_tx" TargetType="TextBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="AllowDrop" Value="False"/>
+        </Style>
+        <Style x:Key="TotalField_tb" TargetType="TextBlock">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontStyle" Value="Oblique"/>            
+        </Style>
+        <Style x:Key="SortButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="35"/>
         </Style>
     </Page.Resources>
     <Grid>
@@ -48,8 +65,27 @@
             <TextBlock x:Name="_Title_tx2" Style="{StaticResource TitleStyle}" FontWeight="Normal"/>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel x:Name="_Toplane_stackpanel" Orientation="Horizontal">
-
+            <StackPanel x:Name="_Toplane_stackpanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel x:Name="_Bank_stackpanel">
+                    <TextBlock x:Name="_TotalMoney_tb" Text="Total" Style="{StaticResource TotalField_tb}"/>
+                    <TextBox x:Name="_TotalMoney_tx" Style="{StaticResource TotalField_tx}" Text="2000" TextChanged="_TotalMoney_tx_TextChanged"/>
+                    <TextBlock x:Name="_TotalCosts_tb" Text="Costs" Style="{StaticResource TotalField_tb}"/>
+                    <TextBox x:Name="_TotalCosts_tx" Style="{StaticResource TotalField_tx}" IsEnabled="False"/>
+                    <TextBlock x:Name="_TotalLeft_tb" Text="Left" Style="{StaticResource TotalField_tb}"/>
+                    <TextBox x:Name="_TotalLeft_tx" Style="{StaticResource TotalField_tx}" IsEnabled="False"/>
+                </StackPanel>
+                <StackPanel x:Name="_List_stackpanel">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="_ABC_Sort" Content="ABC" Style="{StaticResource SortButton}" Click="_ABC_Sort_Click"/>
+                        <Button x:Name="_Price_Sort" Content="$" Style="{StaticResource SortButton}" Click="_Price_Sort_Click"/>
+                        <Button x:Name="_Date_Sort" Content="Date" Style="{StaticResource SortButton}" Click="_Date_Sort_Click"/>
+                        <Button x:Name="_Description_Sort" Content="..." Style="{StaticResource SortButton}" Click="_Description_Sort_Click"/>
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200">
+                        <StackPanel x:Name="_Bill_List" Width="150"/>
+                    </ScrollViewer>
+                </StackPanel>
+                <StackPanel x:Name="_Edit_stackpanel"></StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" HorizontalAlignment="Center">
@@ -66,8 +102,8 @@
                 </StackPanel>
                 <StackPanel x:Name="_Description_stackpanel">
                     <TextBlock x:Name="_Description_tb" Text="Description" Style="{StaticResource TextBlockStyle}"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="140">
-                        <TextBox x:Name="_Description_tx" Style="{StaticResource TextBoxStyle}" Height="400"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="120">
+                        <TextBox x:Name="_Description_tx" Style="{StaticResource TextBoxStyle}"/>
                     </ScrollViewer>
                 </StackPanel>
             </StackPanel>

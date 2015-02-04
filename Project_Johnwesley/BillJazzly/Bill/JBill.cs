@@ -20,8 +20,10 @@ namespace BillJazzly.Bill
             this._Date = builder._Date;
             this._Description = builder._Description;
         }
-        private string DateTimeToString()
-        { return "Date[yyyy-mm-dd: (" + _Date.Year + "-" + _Date.Month + "-" + _Date.Day + "), hh:mm:ss(" + _Date.Hour + ":" + _Date.Minute + ":" + _Date.Second + ")]"; }
+        public string ButtonName()
+        { return _Name + " - " + _Price; }
+        public string DateTimeToString()
+        { return _Date.Year + "-" + _Date.Month + "-" + _Date.Day + " " + _Date.Hour + ":" + _Date.Minute + ":" + _Date.Second; }
         public override string ToString()
         { return "Name[" + _Name + "], Price[" + _Price + "], " + DateTimeToString() + ", Description[" + _Description + "]"; }
         public class Builder

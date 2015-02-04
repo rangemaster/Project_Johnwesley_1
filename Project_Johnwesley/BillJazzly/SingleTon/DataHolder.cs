@@ -32,7 +32,7 @@ namespace BillJazzly.SingleTon
             {
                 List<JBill> list1 = new List<JBill>();
                 DateTime date = new DateTime(2015, 02, 07, 16, 30, 00);
-                list1.Add(new JBill.Builder().Name("Roel").Description("Here is a long description to test the textwrapping. And to make it interesting it gets even longer. It has to be very long...... longer...... llonger..... asdfa;dbjpaosepowuehpasd;bajkn;sfahpsuhpwauhe veryyyyy long...... even longer then this.").Build());
+                list1.Add(new JBill.Builder().Name("Roel").Description("Here is a long description to test the textwrapping. And to make it interesting it gets even longer. It has to be very long...... longer...... llonger..... asdfa;dbjpaosepowuehpasd;bajkn;sfahpsuhpwauhe veryyyyy long...... even longer").Build());
                 list1.Add(new JBill.Builder().Name("Johnwesley").Price(12).Date(date).Description("Example").Build());
 
                 Dictionary<string, List<JBill>> months1 = new Dictionary<string, List<JBill>>();
