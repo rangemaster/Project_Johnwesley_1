@@ -55,6 +55,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bill\JBill.cs" />
+    <Compile Include="Pages\BillPage.xaml.cs">
+      <DependentUpon>BillPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SingleTon\DataHolder.cs" />
     <Compile Include="SingleTon\Settings.cs" />
     <Page Include="MainPage.xaml">
@@ -70,6 +73,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\BillOverviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

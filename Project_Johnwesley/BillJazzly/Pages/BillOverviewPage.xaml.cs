@@ -1,4 +1,5 @@
-﻿using BillJazzly.SingleTon;
+﻿using BillJazzly.Bill;
+using BillJazzly.SingleTon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace BillJazzly.Pages
             _Year_stackpanel.Width = _Main_stackpanel.Width / 2;
             _Month_stackpanel.Width = _Main_stackpanel.Width / 2;
             CheckYearButtons();
+            _Feedback_tx.Text = "";
         }
         private void InitTextBlocks()
         {
@@ -47,7 +49,8 @@ namespace BillJazzly.Pages
         }
         void AddYearRadioButton(int year)
         {
-            // TODO: Add year buttons
+            for (int i = _Year_stackpanel.Children.Count - 1; i > 0; i--)
+            { _Year_stackpanel.Children.RemoveAt(i); }
             RadioButton button = new RadioButton();
             button.Content = year;
             button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
@@ -57,6 +60,8 @@ namespace BillJazzly.Pages
         void AddMonthRadioButton(string month)
         {
             // TODO: Add month buttons
+            for (int i = _Month_stackpanel.Children.Count - 1; i > 0; i--)
+            { _Month_stackpanel.Children.RemoveAt(i); }
             RadioButton button = new RadioButton();
             button.Content = month;
             button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
@@ -72,6 +77,54 @@ namespace BillJazzly.Pages
         {
             if (this.NavigationService.CanGoBack)
             { this.NavigationService.GoBack(); }
+        }
+
+        private void _Open_bn_Click(object sender, RoutedEventArgs e)
+        {
+            int state = 0;
+            for (int i = 1; i < _Year_stackpanel.Children.Count; i++)
+            {
+                if ((_Year_stackpanel.Children[i] as RadioButton).IsChecked == true)
+                    state = 1;
+            }
+            if (state != 1)
+            { SetFeedback("Select a year to continue"); return; } // TODO: Magic cookie
+            for (int i = 1; i < _Month_stackpanel.Children.Count; i++)
+            {
+                if ((_Month_stackpanel.Children[i] as RadioButton).IsChecked == true)
+                    state = 2;
+            }
+            if (state != 2)
+            { SetFeedback("Select a month to continue"); return; } // TODO: Magic cookie
+            SetFeedback("Continue");
+            GoToBillPage();
+        }
+        private void GoToBillPage()
+        {
+            List<JBill> bills = null;
+            bills = DataHolder.Get.GetBillsFromMonth(SelectedYear(), SelectedMonth());
+            BillPage page = new BillPage(bills);
+            this.NavigationService.Navigate(page);
+        }
+        private void SetFeedback(string feedback)
+        { _Feedback_tx.Text = feedback; }
+        private int SelectedYear()
+        {
+            for (int i = 1; i < _Year_stackpanel.Children.Count; i++)
+            {
+                if ((_Year_stackpanel.Children[i] as RadioButton).IsChecked == true)
+                { return int.Parse((_Year_stackpanel.Children[i] as RadioButton).Content.ToString()); }
+            }
+            return -1;
+        }
+        private string SelectedMonth()
+        {
+            for (int i = 1; i < _Month_stackpanel.Children.Count; i++)
+            {
+                if ((_Month_stackpanel.Children[i] as RadioButton).IsChecked == true)
+                { return (_Month_stackpanel.Children[i] as RadioButton).Content.ToString(); }
+            }
+            return null;
         }
     }
 }

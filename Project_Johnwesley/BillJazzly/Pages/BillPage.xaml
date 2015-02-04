@@ -1,0 +1,79 @@
+﻿<PageFunction
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    x:Class="BillJazzly.Pages.BillPage"
+    x:TypeArguments="sys:String"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:DesignHeight="600" d:DesignWidth="900"
+    Title="BillPage">
+    <Page.Resources>
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="Text" Value="Bill page"/>
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="LightGray"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock x:Name="_Title_tx1" Style="{StaticResource TitleStyle}" Foreground="Black"/>
+            <TextBlock x:Name="_Title_tx2" Style="{StaticResource TitleStyle}" FontWeight="Normal"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel x:Name="_Toplane_stackpanel" Orientation="Horizontal">
+
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" HorizontalAlignment="Center">
+            <StackPanel x:Name="_Bottomlane_stackpanel" Orientation="Horizontal">
+                <StackPanel x:Name="_Name_and_Price_stackpanel">
+                    <TextBlock x:Name="_Name_tb" Text="Name" Style="{StaticResource TextBlockStyle}" />
+                    <TextBox x:Name="_Name_tx"  Style="{StaticResource TextBoxStyle}"/>
+                    <TextBlock x:Name="_Price_tb" Text="Price" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox x:Name="_Price_tx" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel x:Name="_Date_stackpanel">
+                    <TextBlock x:Name="_Date_tb" Text="Date" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox x:Name="_Date_tx" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel x:Name="_Description_stackpanel">
+                    <TextBlock x:Name="_Description_tb" Text="Description" Style="{StaticResource TextBlockStyle}"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="140">
+                        <TextBox x:Name="_Description_tx" Style="{StaticResource TextBoxStyle}" Height="400"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+
+        </Grid>
+    </Grid>
+</PageFunction>

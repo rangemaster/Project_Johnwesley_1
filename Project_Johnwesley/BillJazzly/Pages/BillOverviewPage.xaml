@@ -21,6 +21,7 @@
             <Setter Property="Width" Value="150"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="20,0,20,0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
@@ -36,6 +37,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="500*"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -55,8 +57,14 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="0">
-            <Button x:Name="_Back_bn" Content="Back" Click="_Back_bn_Click" Style="{StaticResource ButtonStyle}"/>
+        <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+            <TextBlock x:Name="_Feedback_tx" Text="[Feedback]" Style="{StaticResource TitleStyle}" FontSize="12" Foreground="Red"/>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="_Back_bn" Content="Back" Click="_Back_bn_Click" Style="{StaticResource ButtonStyle}"/>
+                <Button x:Name="_Open_bn" Content="Open" Click="_Open_bn_Click" Style="{StaticResource ButtonStyle}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </PageFunction>
