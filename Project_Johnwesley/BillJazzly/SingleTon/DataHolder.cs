@@ -34,6 +34,7 @@ namespace BillJazzly.SingleTon
                 DateTime date = new DateTime(2015, 02, 07, 16, 30, 00);
                 list1.Add(new JBill.Builder().Name("Roel").Description("Here is a long description to test the textwrapping. And to make it interesting it gets even longer. It has to be very long...... longer...... llonger..... asdfa;dbjpaosepowuehpasd;bajkn;sfahpsuhpwauhe veryyyyy long...... even longer").Build());
                 list1.Add(new JBill.Builder().Name("Johnwesley").Price(12).Date(date).Description("Example").Build());
+                list1.Add(new JBill.Builder().Name("Ashley").Price(13).Description("An other Example").Build());
 
                 Dictionary<string, List<JBill>> months1 = new Dictionary<string, List<JBill>>();
                 months1.Add("Februari", list1);

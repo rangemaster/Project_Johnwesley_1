@@ -32,6 +32,7 @@ namespace BillJazzly.Pages
             _Bills = bills;
             InitializeComponent();
             UpdateBills();
+            VisabilityAllEditButtons(false);
         }
         #region Buttons
         #region Sort Buttons
@@ -51,18 +52,37 @@ namespace BillJazzly.Pages
             {
                 Button button = new Button();
                 button.Content = bill.ButtonName();
+                button.Click += ShowButton;
                 _Bill_List.Children.Add(button);
             }
             ShowFirstBill();
         }
+        private void ShowButton(object sender, RoutedEventArgs e)
+        {
+            string content = (sender as Button).Content.ToString();
+            Debug.WriteLine("Button " + content + " is pressed");
+            ShowBillInfo(SearchBill(content));
+        }
+        private JBill SearchBill(string billButtonName)
+        {
+            JBill searchbill = null;
+            foreach (JBill bill in _Bills)
+            { if (bill.ButtonName().Equals(billButtonName)) { searchbill = bill; } }
+            return searchbill;
+        }
         private void ShowFirstBill()
         {
             if (_Bills.Count > 0)
+            { ShowBillInfo(_Bills[0]); }
+        }
+        private void ShowBillInfo(JBill bill)
+        {
+            if (bill != null)
             {
-                _Name_tx.Text = _Bills[0]._Name;
-                _Price_tx.Text = _Bills[0]._Price.ToString();
-                _Date_tx.Text = _Bills[0].DateTimeToString();
-                _Description_tx.Text = _Bills[0]._Description;
+                _Name_tx.Text = bill._Name;
+                _Price_tx.Text = bill._Price.ToString();
+                _Date_tx.Text = bill.DateTimeToString();
+                _Description_tx.Text = bill._Description;
             }
         }
         #region Sort Functions
@@ -158,6 +178,52 @@ namespace BillJazzly.Pages
             { costs += bill._Price; }
             return costs;
         }
+        #endregion
+
+        #region Buttons Add/Edit/Remove
+        private void _Add_bn_Click(object sender, RoutedEventArgs e)
+        { ShowCleanEditField(); VisabilityAllEditButtons(false); ShowAddButton(); }
+        private void _Edit_bn_Click(object sender, RoutedEventArgs e)
+        { VisabilityAllEditButtons(false); ShowEditButton(); }
+        private void _Remove_bn_Click(object sender, RoutedEventArgs e)
+        { VisabilityAllEditButtons(false); ShowRemoveButton(); }
+        private void _Add_EditField_bn_Click(object sender, RoutedEventArgs e)
+        { }
+        private void _Edit_EditField_bn_Click(object sender, RoutedEventArgs e)
+        { }
+        private void _Remove_EditField_bn_Click(object sender, RoutedEventArgs e)
+        { }
+        private void _Done_EditField_bn_Click(object sender, RoutedEventArgs e)
+        { }
+        #endregion
+        #region Button Functions Add/Edit/Remove
+        #region Show Functions
+        private void ShowCleanEditField()
+        {
+            _Name_tx.Text = "";
+            _Price_tx.Text = "0.00";
+            _Date_tx.Text = "yyyy-mm-dd";
+            _Description_tx.Text = "";
+        }
+        private void VisabilityAllEditButtons(bool result)
+        {
+            System.Windows.Visibility Vis = System.Windows.Visibility.Collapsed;
+            if (result)
+                Vis = System.Windows.Visibility.Visible;
+            _Add_EditField_bn.Visibility = Vis;
+            _Add_EditField_bn.IsEnabled = result;
+            _Edit_EditField_bn.Visibility = Vis;
+            _Edit_EditField_bn.IsEnabled = result;
+            _Remove_EditField_bn.Visibility = Vis;
+            _Remove_EditField_bn.IsEnabled = result;
+            _Done_EditField_bn.Visibility = Vis;
+            _Done_EditField_bn.IsEnabled = result;
+        }
+        private void ShowAddButton() { _Add_EditField_bn.IsEnabled = true; _Add_EditField_bn.Visibility = System.Windows.Visibility.Visible; }
+        private void ShowEditButton() { _Edit_EditField_bn.IsEnabled = true; _Edit_EditField_bn.Visibility = System.Windows.Visibility.Visible; }
+        private void ShowRemoveButton() { _Remove_EditField_bn.IsEnabled = true; _Remove_EditField_bn.Visibility = System.Windows.Visibility.Visible; }
+        private void ShowDoneButton() { _Done_EditField_bn.IsEnabled = true; _Done_EditField_bn.Visibility = System.Windows.Visibility.Visible; }
+        #endregion
         #endregion
     }
 }

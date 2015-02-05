@@ -74,7 +74,7 @@
                     <TextBlock x:Name="_TotalLeft_tb" Text="Left" Style="{StaticResource TotalField_tb}"/>
                     <TextBox x:Name="_TotalLeft_tx" Style="{StaticResource TotalField_tx}" IsEnabled="False"/>
                 </StackPanel>
-                <StackPanel x:Name="_List_stackpanel">
+                <StackPanel x:Name="_List_stackpanel" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="_ABC_Sort" Content="ABC" Style="{StaticResource SortButton}" Click="_ABC_Sort_Click"/>
                         <Button x:Name="_Price_Sort" Content="$" Style="{StaticResource SortButton}" Click="_Price_Sort_Click"/>
@@ -85,7 +85,11 @@
                         <StackPanel x:Name="_Bill_List" Width="150"/>
                     </ScrollViewer>
                 </StackPanel>
-                <StackPanel x:Name="_Edit_stackpanel"></StackPanel>
+                <StackPanel x:Name="_Edit_stackpanel" Visibility="Visible" VerticalAlignment="Center">
+                    <Button x:Name="_Add_bn" Content="Add" Click="_Add_bn_Click" Width="150"/>
+                    <Button x:Name="_Edit_bn" Content="Edit" Click="_Edit_bn_Click" Width="150"/>
+                    <Button x:Name="_Remove_bn" Content="Remove" Click="_Remove_bn_Click" Width="150"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" HorizontalAlignment="Center">
@@ -105,6 +109,12 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Height="120">
                         <TextBox x:Name="_Description_tx" Style="{StaticResource TextBoxStyle}"/>
                     </ScrollViewer>
+                </StackPanel>
+                <StackPanel x:Name="_EditField_stackpanel" Width="150">
+                    <Button x:Name="_Add_EditField_bn" Content="Add" Click="_Add_EditField_bn_Click"/>
+                    <Button x:Name="_Edit_EditField_bn" Content="Edit" Click="_Edit_EditField_bn_Click"/>
+                    <Button x:Name="_Remove_EditField_bn" Content="Remove" Click="_Remove_EditField_bn_Click"/>
+                    <Button x:Name="_Done_EditField_bn" Content="Done" Click="_Done_EditField_bn_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
