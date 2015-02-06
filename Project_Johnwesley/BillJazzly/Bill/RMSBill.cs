@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BillJazzly.Bill
 {
-    public class JBill
+    public class RMSBill
     {
         public string _Name { get; private set; }
         public double _Price { get; private set; }
         public DateTime _Date { get; private set; }
         public TimeSpan _Time { get; private set; }
         public string _Description { get; private set; }
-        public JBill(Builder builder)
+        public RMSBill(Builder builder)
         {
             this._Name = builder._Name;
             this._Price = builder._Price;
@@ -21,9 +21,13 @@ namespace BillJazzly.Bill
             this._Description = builder._Description;
         }
         public string ButtonName()
-        { return _Name + " - " + _Price; }
+        { return ButtonName(_Name, _Price.ToString()); }
+        public static string ButtonName(string name, string price)
+        { return name + " - " + price; }
+        private string ToTwoChars(int value)
+        { return (value < 10 ? "0" + value : "" + value); }
         public string DateTimeToString()
-        { return _Date.Year + "-" + _Date.Month + "-" + _Date.Day + " " + _Date.Hour + ":" + _Date.Minute + ":" + _Date.Second; }
+        { return _Date.Year + "-" + ToTwoChars(_Date.Month) + "-" + ToTwoChars(_Date.Day) + " " + ToTwoChars(_Date.Hour) + ":" + ToTwoChars(_Date.Minute) + ":" + ToTwoChars(_Date.Second); }
         public override string ToString()
         { return "Name[" + _Name + "], Price[" + _Price + "], " + DateTimeToString() + ", Description[" + _Description + "]"; }
         public class Builder
@@ -43,8 +47,8 @@ namespace BillJazzly.Bill
             public Builder Price(double price) { _Price = price; return this; }
             public Builder Date(DateTime date) { _Date = date; return this; }
             public Builder Description(string description) { _Description = description; return this; }
-            public JBill Build()
-            { return new JBill(this); }
+            public RMSBill Build()
+            { return new RMSBill(this); }
         }
     }
 }

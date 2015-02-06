@@ -37,7 +37,8 @@ namespace BillJazzly
 
         private void _Settings_bn_Click(object sender, RoutedEventArgs e)
         {
-
+            SettingsPage page = new SettingsPage();
+            this.NavigationService.Navigate(page);
         }
         private void _Exit_bn_Click(object sender, RoutedEventArgs e)
         {

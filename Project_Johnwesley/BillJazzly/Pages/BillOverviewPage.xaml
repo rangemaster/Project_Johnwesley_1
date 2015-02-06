@@ -22,12 +22,37 @@
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="20,0,20,0"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="AddRemoveStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
         <Style x:Key="StackpanelStyle" TargetType="StackPanel">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="InputBlock" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="InputButton" TargetType="Button">
+            <Setter Property="Width" Value="75"/>
         </Style>
     </Page.Resources>
     <Grid>
@@ -38,7 +63,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500*"/>
@@ -49,11 +74,41 @@
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal" x:Name="_Main_stackpanel" Style="{StaticResource StackpanelStyle}">
-                <StackPanel x:Name="_Year_stackpanel" Style="{StaticResource StackpanelStyle}">
-                    <TextBlock x:Name="Year_tx2" Text="Year" Style="{StaticResource TitleStyle}" FontSize="20" Background="Gray"/>
+                <StackPanel>
+                    <StackPanel Style="{StaticResource StackpanelStyle}">
+                        <TextBlock x:Name="Year_tx2" Text="Year" Style="{StaticResource TitleStyle}" FontSize="20" Background="Gray"/>
+                        <StackPanel Orientation="Horizontal" Style="{StaticResource StackpanelStyle}">
+                            <Button x:Name="_Year_plus_bn" Content="+" Style="{StaticResource AddRemoveStyle}" Click="_Year_plus_bn_Click"/>
+                            <Button x:Name="_Year_min_bn" Content="-" Style="{StaticResource AddRemoveStyle}" Click="_Year_min_bn_Click"/>
+                        </StackPanel>
+                        <StackPanel x:Name="_Input_Year_stackpanel" Visibility="Collapsed">
+                            <TextBlock Text="Insert Year" Style="{StaticResource InputBlock}"/>
+                            <TextBox x:Name="_Year_Input_tx" Style="{StaticResource InputBox}"/>
+                            <Button x:Name="_Year_Input_bn" Content="Confirm" Click="_Year_Input_bn_Click" Style="{StaticResource InputButton}"/>
+                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="320">
+                            <StackPanel x:Name="_Year_stackpanel" Style="{StaticResource StackpanelStyle}">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel x:Name="_Month_stackpanel" Style="{StaticResource StackpanelStyle}">
-                    <TextBlock x:Name="_Month_tx" Text="Month" Style="{StaticResource TitleStyle}" FontSize="20" Background="Gray"/>
+                <StackPanel>
+                    <StackPanel Style="{StaticResource StackpanelStyle}">
+                        <TextBlock x:Name="_Month_tx" Text="Month" Style="{StaticResource TitleStyle}" FontSize="20" Background="Gray"/>
+                        <StackPanel Orientation="Horizontal" Style="{StaticResource StackpanelStyle}">
+                            <Button x:Name="_Month_plus_bn" Content="+" Style="{StaticResource AddRemoveStyle}" Click="_Month_plus_bn_Click"/>
+                            <Button x:Name="_Month_min_bn" Content="-" Style="{StaticResource AddRemoveStyle}" Click="_Month_min_bn_Click"/>
+                        </StackPanel>
+                        <StackPanel x:Name="_Input_Month_stackpanel" Visibility="Collapsed">
+                            <TextBlock Text="Insert Month" Style="{StaticResource InputBlock}"/>
+                            <TextBox x:Name="_Month_Input_tx" Style="{StaticResource InputBox}"/>
+                            <Button x:Name="_Month_Input_bn" Content="Confirm" Click="_Month_Input_bn_Click" Style="{StaticResource InputButton}"/>
+                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="320">
+                            <StackPanel x:Name="_Month_stackpanel" Style="{StaticResource StackpanelStyle}">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -61,9 +116,15 @@
             <TextBlock x:Name="_Feedback_tx" Text="[Feedback]" Style="{StaticResource TitleStyle}" FontSize="12" Foreground="Red"/>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="_Back_bn" Content="Back" Click="_Back_bn_Click" Style="{StaticResource ButtonStyle}"/>
-                <Button x:Name="_Open_bn" Content="Open" Click="_Open_bn_Click" Style="{StaticResource ButtonStyle}"/>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="_Reload_bn" Content="Reload" Click="_Reload_bn_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="_Save_bn" Content="Save" Click="_Save_bn_Click" Style="{StaticResource ButtonStyle}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="_Back_bn" Content="Back" Click="_Back_bn_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="_Open_bn" Content="Open" Click="_Open_bn_Click" Style="{StaticResource ButtonStyle}"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

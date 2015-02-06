@@ -54,9 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Bill\JBill.cs" />
+    <Compile Include="Bill\RMSBill.cs" />
     <Compile Include="Pages\BillPage.xaml.cs">
       <DependentUpon>BillPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SingleTon\DataHolder.cs" />
     <Compile Include="SingleTon\Settings.cs" />
@@ -77,6 +80,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BillPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

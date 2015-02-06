@@ -41,13 +41,19 @@
         <Style x:Key="TotalField_tb" TargetType="TextBlock">
             <Setter Property="Width" Value="150"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontStyle" Value="Oblique"/>            
+            <Setter Property="FontStyle" Value="Oblique"/>
         </Style>
         <Style x:Key="SortButton" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Width" Value="35"/>
+        </Style>
+        <Style x:Key="BottomButton" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
         </Style>
     </Page.Resources>
     <Grid>
@@ -85,10 +91,9 @@
                         <StackPanel x:Name="_Bill_List" Width="150"/>
                     </ScrollViewer>
                 </StackPanel>
-                <StackPanel x:Name="_Edit_stackpanel" Visibility="Visible" VerticalAlignment="Center">
-                    <Button x:Name="_Add_bn" Content="Add" Click="_Add_bn_Click" Width="150"/>
-                    <Button x:Name="_Edit_bn" Content="Edit" Click="_Edit_bn_Click" Width="150"/>
-                    <Button x:Name="_Remove_bn" Content="Remove" Click="_Remove_bn_Click" Width="150"/>
+                <StackPanel x:Name="_Edit_stackpanel" Visibility="Visible" VerticalAlignment="Center" Width="150">
+                    <Button x:Name="_Add_bn" Content="Add" Click="_Add_bn_Click"/>
+                    <Button x:Name="_Edit_bn" Content="Edit" Click="_Edit_bn_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -106,20 +111,23 @@
                 </StackPanel>
                 <StackPanel x:Name="_Description_stackpanel">
                     <TextBlock x:Name="_Description_tb" Text="Description" Style="{StaticResource TextBlockStyle}"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="120">
-                        <TextBox x:Name="_Description_tx" Style="{StaticResource TextBoxStyle}"/>
+                    <ScrollViewer VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" Width="150" Height="150">
+                        <TextBox x:Name="_Description_tx" TextWrapping="Wrap" IsEnabled="False"/>
                     </ScrollViewer>
                 </StackPanel>
-                <StackPanel x:Name="_EditField_stackpanel" Width="150">
+                <StackPanel x:Name="_EditField_stackpanel" VerticalAlignment="Center" Width="150" Visibility="Collapsed">
                     <Button x:Name="_Add_EditField_bn" Content="Add" Click="_Add_EditField_bn_Click"/>
                     <Button x:Name="_Edit_EditField_bn" Content="Edit" Click="_Edit_EditField_bn_Click"/>
                     <Button x:Name="_Remove_EditField_bn" Content="Remove" Click="_Remove_EditField_bn_Click"/>
-                    <Button x:Name="_Done_EditField_bn" Content="Done" Click="_Done_EditField_bn_Click"/>
+                    <Button x:Name="_Cancel_EditField_bn" Content="Cancel" Click="_Cancel_EditField_bn_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="3">
-
+        <Grid Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel x:Name="Bottom_stackpanel" Orientation="Horizontal">
+                <Button x:Name="_Back_bn" Content="Back" Click="_Back_bn_Click" Style="{StaticResource BottomButton}"/>
+                <Button x:Name="_Save_bn" Content="Save Changes" Click="_Save_bn_Click" Style="{StaticResource BottomButton}" IsEnabled="False"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </PageFunction>
