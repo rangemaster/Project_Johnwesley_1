@@ -74,7 +74,7 @@
             <StackPanel x:Name="_Toplane_stackpanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel x:Name="_Bank_stackpanel">
                     <TextBlock x:Name="_TotalMoney_tb" Text="Total" Style="{StaticResource TotalField_tb}"/>
-                    <TextBox x:Name="_TotalMoney_tx" Style="{StaticResource TotalField_tx}" Text="2000" TextChanged="_TotalMoney_tx_TextChanged"/>
+                    <TextBox x:Name="_TotalMoney_tx" Style="{StaticResource TotalField_tx}" TextChanged="_TotalMoney_tx_TextChanged"/>
                     <TextBlock x:Name="_TotalCosts_tb" Text="Costs" Style="{StaticResource TotalField_tb}"/>
                     <TextBox x:Name="_TotalCosts_tx" Style="{StaticResource TotalField_tx}" IsEnabled="False"/>
                     <TextBlock x:Name="_TotalLeft_tb" Text="Left" Style="{StaticResource TotalField_tb}"/>

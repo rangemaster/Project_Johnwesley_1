@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,11 @@ namespace BillJazzly.Pages
     /// </summary>
     public partial class SettingsPage : PageFunction<String>
     {
-        private TextBox _Input_Min_Year_tx, _Input_Max_Year_tx;
+        private TextBox _Input_Min_Year_tx, _Input_Max_Year_tx, _Input_Salary_tx, _Input_FontSize_Overview_tx;
         private Button _Audio_on_bn, _Audio_off_bn, _Video_on_bn, _Video_off_bn;
         private Button _Audio_1_bn, _Audio_2_bn, _Audio_3_bn, _Audio_4_bn, _Audio_5_bn;
         private int _Volume;
+        private DispatcherTimer _Timer = null;
         public SettingsPage()
         {
             InitializeComponent();
@@ -39,20 +41,25 @@ namespace BillJazzly.Pages
         private void Init()
         {
             InitFields();
-            AddSetting("Min Bill Year", _Input_Min_Year_tx);
-            AddSetting("Max Bill Year", _Input_Max_Year_tx);
-            AddSetting("Volume", _Audio_1_bn, _Audio_2_bn, _Audio_3_bn, _Audio_4_bn, _Audio_5_bn);
-            AddSetting("Audio", _Audio_on_bn, _Audio_off_bn);
-            AddSetting("Video", _Video_on_bn, _Video_off_bn);
+            AddSetting(Short_Keys.Settings.OverView_FontSize, _Input_FontSize_Overview_tx); 
+            AddSetting(Short_Keys.Settings.Salary, _Input_Salary_tx);
+            AddSetting(Short_Keys.Settings.Min_Bill_Year, _Input_Min_Year_tx);
+            AddSetting(Short_Keys.Settings.Max_Bill_Year, _Input_Max_Year_tx);
+            AddSetting(Short_Keys.Settings.Volume, _Audio_1_bn, _Audio_2_bn, _Audio_3_bn, _Audio_4_bn, _Audio_5_bn);
+            AddSetting(Short_Keys.Settings.Audio, _Audio_on_bn, _Audio_off_bn);
+            AddSetting(Short_Keys.Settings.Video, _Video_on_bn, _Video_off_bn);
         }
         private void InitFields()
         {
             _Input_Min_Year_tx = DefaultTextBoxSettings();
             _Input_Max_Year_tx = DefaultTextBoxSettings();
-            _Audio_on_bn = DefaultButtonSettings("ON", AudioOn_Click);
-            _Audio_off_bn = DefaultButtonSettings("OFF", AudioOff_Click);
-            _Video_on_bn = DefaultButtonSettings("ON", VideoOn_Click);
-            _Video_off_bn = DefaultButtonSettings("OFF", VideoOff_Click);
+            _Input_Salary_tx = DefaultTextBoxSettings();
+            _Input_FontSize_Overview_tx = DefaultTextBoxSettings();
+            _Input_FontSize_Overview_tx.Text = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.OverView_FontSize).ToString();
+            _Audio_on_bn = DefaultButtonSettings(Short_Keys.Settings.On, AudioOn_Click);
+            _Audio_off_bn = DefaultButtonSettings(Short_Keys.Settings.Off, AudioOff_Click);
+            _Video_on_bn = DefaultButtonSettings(Short_Keys.Settings.On, VideoOn_Click);
+            _Video_off_bn = DefaultButtonSettings(Short_Keys.Settings.Off, VideoOff_Click);
             _Audio_1_bn = DefaultButtonSettings("1", Audio_1_Click);
             _Audio_2_bn = DefaultButtonSettings("2", Audio_2_Click);
             _Audio_3_bn = DefaultButtonSettings("3", Audio_3_Click);
@@ -65,9 +72,9 @@ namespace BillJazzly.Pages
         { AddOnOffSetting(description, On_Action, Off_Action, false); }
         private void AddOnOffSetting(string description, Action<object, RoutedEventArgs> On_Action, Action<object, RoutedEventArgs> Off_Action, bool on)
         {
-            Button On_bn = DefaultButtonSettings("ON");
+            Button On_bn = DefaultButtonSettings(Short_Keys.Settings.On);
             On_bn.Click += new RoutedEventHandler(On_Action);
-            Button Off_bn = DefaultButtonSettings("OFF");
+            Button Off_bn = DefaultButtonSettings(Short_Keys.Settings.Off);
             Off_bn.Click += new RoutedEventHandler(Off_Action);
             AddOnOffSetting(description, On_bn, Off_bn, on);
         }
@@ -158,11 +165,21 @@ namespace BillJazzly.Pages
         private void AudioOn_Click(object sender, RoutedEventArgs e)
         { AudioButton_SetEnabled(false); Debug.WriteLine("Audio On Pressed"); }
         private void AudioOff_Click(object sender, RoutedEventArgs e)
-        { AudioButton_SetEnabled(true); } // TODO: To implement audio player (change '1' to '2')
+        { AudioButton_SetEnabled(false); } // TODO: To implement audio player (change '1' to '2')
         private void VideoOn_Click(object sender, RoutedEventArgs e)
         { VideoButton_SetEnabled(false); Debug.WriteLine("Video On Pressed"); }
         private void VideoOff_Click(object sender, RoutedEventArgs e)
-        { VideoButton_SetEnabled(true); } // TODO: To implement video player (change '1' to '2')
+        { VideoButton_SetEnabled(false); } // TODO: To implement video player (change '1' to '2')
+        void _Input_FontSize_Overview_tx_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int size = 12;
+            try
+            { size = int.Parse(_Input_FontSize_Overview_tx.Text); }
+            catch (FormatException) { SetFeedback(Short_Keys.Exception.FormatFontSize); return; }
+            DataHolder.Get.SetSetting(Short_Keys.Settings.OverView_FontSize, size);
+            _Settings_stackpanel.Children.Clear();
+            Init();
+        }
         #endregion
 
         private void _Back_bn_Click(object sender, RoutedEventArgs e)
@@ -173,28 +190,40 @@ namespace BillJazzly.Pages
         { SaveSettings(); }
         private void LoadSettings()
         {
-            _Input_Min_Year_tx.Text = DataHolder.Get.GetSettingsValue("Min_Year").ToString(); // Magic cookie
-            _Input_Max_Year_tx.Text = DataHolder.Get.GetSettingsValue("Max_Year").ToString(); // Magic cookie
-            Volume_SetValue(DataHolder.Get.GetSettingsValue("Volume")); // Magic cookie
-            AudioButton_SetEnabled((DataHolder.Get.GetSettingsValue("Audio") == 1 ? true : false)); // Magic cookie
-            VideoButton_SetEnabled((DataHolder.Get.GetSettingsValue("Video") == 1 ? true : false)); // Magic cookie
+            DataHolder.Get.LoadSettings();
+            _Input_FontSize_Overview_tx.Text = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.OverView_FontSize).ToString();
+            _Input_Salary_tx.Text = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Salary).ToString();
+            _Input_Min_Year_tx.Text = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Min_Bill_Year).ToString();
+            _Input_Max_Year_tx.Text = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Max_Bill_Year).ToString();
+            Volume_SetValue(DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Volume));
+            AudioButton_SetEnabled((DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Audio) == 1 ? true : false));
+            VideoButton_SetEnabled((DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Video) == 1 ? true : false));
+            SetFeedback(Short_Keys.Settings.Loaded);
         }
         private void SaveSettings()
         {
-            // Compress method
-            int year_min = 0, year_max = 0;
+            int fontsize = 10, salary = 0, year_min = 0, year_max = 0;
+            try
+            { fontsize = int.Parse(_Input_FontSize_Overview_tx.Text); }
+            catch (FormatException) { SetFeedback(Short_Keys.Invalid.FontSze); return; }
+            try
+            { salary = int.Parse(_Input_Salary_tx.Text); }
+            catch (FormatException) { SetFeedback(Short_Keys.Invalid.Salary); return; }
             try
             { year_min = int.Parse(_Input_Min_Year_tx.Text); }
-            catch (FormatException) { SetFeedback("Invalid year value"); return; }
+            catch (FormatException) { SetFeedback(Short_Keys.Invalid.Year); return; }
             try
             { year_max = int.Parse(_Input_Max_Year_tx.Text); }
-            catch (FormatException) { SetFeedback("Invalid year value"); return; }
-            DataHolder.Get.SetSetting("Min_Year", year_min); // Magic cookie
-            DataHolder.Get.SetSetting("Max_Year", year_max); // Magic cookie
-            DataHolder.Get.SetSetting("Volume", Volume_GetValue()); // Magic cookie
-            DataHolder.Get.SetSetting("Audio", (AudioButton_IsEnabled() ? 1 : 0)); // Magic cookie
-            DataHolder.Get.SetSetting("Video", (VideoButton_IsEnabled() ? 1 : 0)); // Magic cookie
+            catch (FormatException) { SetFeedback(Short_Keys.Invalid.Year); return; }
+            DataHolder.Get.SetSetting(Short_Keys.Settings.OverView_FontSize, fontsize);
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Salary, salary);
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Min_Bill_Year, year_min);
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Max_Bill_Year, year_max);
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Volume, Volume_GetValue());
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Audio, (AudioButton_IsEnabled() ? 1 : 0));
+            DataHolder.Get.SetSetting(Short_Keys.Settings.Video, (VideoButton_IsEnabled() ? 1 : 0));
             DataHolder.Get.SaveSettings();
+            SetFeedback(Short_Keys.Settings.Saved);
         }
         private bool AudioButton_IsEnabled() { return _Audio_on_bn.IsEnabled; }
         private void AudioButton_SetEnabled(bool result) { _Audio_on_bn.IsEnabled = result; _Audio_off_bn.IsEnabled = !result; }
@@ -218,10 +247,14 @@ namespace BillJazzly.Pages
         private void Timer(string feedback)
         {
             _Feedback_tb.Text = feedback;
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 3);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            if (_Timer == null)
+            {
+                _Timer = new DispatcherTimer();
+                _Timer.Tick += Timer_Tick;
+                _Timer.Interval = new TimeSpan(0, 0, 3);
+            }
+            else { _Timer.Stop(); }
+            _Timer.Start();
         }
         private void Timer_Tick(object sender, EventArgs e)
         {

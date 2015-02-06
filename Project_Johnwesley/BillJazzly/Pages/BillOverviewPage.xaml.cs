@@ -2,6 +2,7 @@
 using BillJazzly.SingleTon;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,15 +32,9 @@ namespace BillJazzly.Pages
             UpdateYearButtons();
             _Feedback_tx.Text = "";
         }
-        private void InitTextBlocks()
-        {
-            TextBlock ytb = new TextBlock();
-            ytb.Text = "Year";
-
-        }
+        #region Update
         void UpdateYearButtons()
         {
-            // TODO: Sort on ABC
             DataHolder.Get.SortBillsOnYears();
             ClearYear_stackpanel();
             foreach (int year in DataHolder.Get.Bills.Keys)
@@ -47,15 +42,62 @@ namespace BillJazzly.Pages
         }
         void UpdateMonthButtons(int year)
         {
-            // TODO: Sort on ABC
             if (year != -1)
             {
-                DataHolder.Get.SortBillsOnMonths();
                 ClearMonth_stackpanel();
+                List<string> months = new List<string>();
                 foreach (string month in DataHolder.Get.GetMonthsFromYear(year).Keys)
-                { AddMonthRadioButton(month); }
+                { months.Add(month); }
+                string[] months_NL = new string[] { "januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december" };
+                string[] months_ENG = new string[] { "january", "february", "march", "april", "may", "jun", "july", "august", "september", "october", "november", "december" };
+                int amount = 1;
+                while (amount > 0)
+                {
+                    amount = 0;
+                    for (int i = 1; i < months.Count; i++)
+                    {
+                        int compare_value = CompareMonths(months_NL, months_ENG, months[i - 1], months[i]);
+                        if (compare_value == 1)
+                        {
+                            string x = months[i - 1];
+                            months[i - 1] = months[i];
+                            months[i] = x;
+                            amount++;
+                        }
+                    }
+                }
+                foreach (string month in months)
+                { AddMonthRadioButton(year, month); }
             }
         }
+        private string StripCounter(string year_or_month)
+        {
+            string content = year_or_month;
+            string[] array = content.Split('(', ')');
+            return array[0].Trim();
+        }
+        private int CompareMonths(string[] months_NL, string[] months_ENG, string month1, string month2)
+        {
+            int index_month1 = -1;
+            int index_month2 = -1;
+            month1 = month1.ToLower();
+            month2 = month2.ToLower();
+            for (int idx = 0; idx < months_NL.Length && idx < months_ENG.Length; idx++)
+            {
+                if (index_month1 == -1)
+                    if (month1.Equals(months_NL[idx]) || month1.Equals(months_ENG[idx]))
+                    { index_month1 = idx; }
+                if (index_month2 == -1)
+                    if (month2.Equals(months_NL[idx]) || month2.Equals(months_ENG[idx]))
+                    { index_month2 = idx; }
+                if (index_month1 < index_month2)
+                    return 1;
+                if (index_month1 > index_month2)
+                    return -1;
+            }
+            return 0;
+        }
+        #endregion
         void ClearYear_stackpanel()
         {
             _Year_stackpanel.Children.Clear();
@@ -66,37 +108,40 @@ namespace BillJazzly.Pages
         }
         void AddYearRadioButton(int year)
         {
-            RadioButton button = new RadioButton();
-            button.Content = year;
-            button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            RadioButton button = CreateDefaultRadioButton((year + " (" + DataHolder.Get.Bills[year].Count + ")").ToString());
             button.Click += _Year_rbn_Click;
             _Year_stackpanel.Children.Add(button);
         }
-        void AddMonthRadioButton(string month)
+        void AddMonthRadioButton(int year, string month)
         {
-            RadioButton button = new RadioButton();
-            button.Content = month;
-            button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            RadioButton button = CreateDefaultRadioButton(month + " (" + DataHolder.Get.GetBillsFromMonth(year, month).Item2.Count + ")");
             _Month_stackpanel.Children.Add(button);
         }
-        void WrongInputY() { WrongInputY("0"); }
-        void WrongInputM() { WrongInputM("0"); }
-        void WrongInputY(string feedback) { WrongInput("Year", feedback); }
-        void WrongInputM(string feedback) { WrongInput("Month", feedback); }
-        void WrongInput(string location, string feedback) { SetFeedback("Wrong Input (" + feedback + ")"); } // TODO: Magic cookie
+        RadioButton CreateDefaultRadioButton(string name)
+        {
+            RadioButton button = new RadioButton();
+            button.Content = name;
+            button.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+            button.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            button.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+            button.FontSize = DataHolder.Get.GetSettingsValue(Short_Keys.Settings.OverView_FontSize);
+            return button;
+        }
+        void WrongInput(string location, string feedback) { SetFeedback(Short_Keys.Execute.WrongInput(feedback)); }
         private void _Year_Input_bn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 int year = int.Parse(_Year_Input_tx.Text);
-                if (year < DataHolder.Get.GetSettingsValue("Min_Year"))
-                { WrongInputY("To Low"); return; }
-                else if (year > DataHolder.Get.GetSettingsValue("Max_Year"))
-                { WrongInputY("To High"); return; }
-                DataHolder.Get.Bills.Add(year, new Dictionary<string, List<RMSBill>>());
+                if (year < DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Min_Bill_Year))
+                { SetFeedback(Short_Keys.Feedback.ToLow); return; }
+                else if (year > DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Max_Bill_Year))
+                { SetFeedback(Short_Keys.Feedback.ToHigh); return; }
+                DataHolder.Get.Bills.Add(year, new Dictionary<string, Tuple<double, List<RMSBill>>>());
             }
-            catch (FormatException) { WrongInputY("Format"); return; } // TODO: Magic cookie
-            catch (ArgumentException) { WrongInputY("Allready exists"); return; } // TODO: Magic cookie
+            catch (FormatException) { SetFeedback(Short_Keys.Feedback.WrongInputFormat); return; }
+            catch (ArgumentException) { SetFeedback(Short_Keys.Feedback.WrongInputDoesExists); return; }
             _Year_Input_tx.Text = "";
             UpdateYearButtons();
             HideYearInput();
@@ -106,12 +151,12 @@ namespace BillJazzly.Pages
             try
             {
                 string month = _Month_Input_tx.Text;
-                try { int.Parse(month); WrongInputM("Use Letters, not numbers"); return; }
+                try { int.Parse(month); SetFeedback(Short_Keys.Feedback.LettersNotNumbers); return; }
                 catch (FormatException) { }
-                DataHolder.Get.Bills[SelectedYear()].Add(month, new List<RMSBill>());
+                DataHolder.Get.Bills[SelectedYear()].Add(month, new Tuple<double, List<RMSBill>>(DataHolder.Get.GetSettingsValue(Short_Keys.Settings.Salary), new List<RMSBill>()));
             }
-            catch (FormatException) { WrongInputM("Format"); return; } // TODO: Magic cookie
-            catch (ArgumentException) { WrongInputM("Allready exists"); return; } // TODO: Magic cookie
+            catch (FormatException) { SetFeedback(Short_Keys.Feedback.WrongInputFormat); return; }
+            catch (ArgumentException) { SetFeedback(Short_Keys.Feedback.WrongInputDoesExists); return; }
             _Month_Input_tx.Text = "";
             UpdateMonthButtons(SelectedYear());
             HideMonthInput();
@@ -123,7 +168,7 @@ namespace BillJazzly.Pages
         private void _Year_rbn_Click(object sender, RoutedEventArgs e)
         {
             string content = (sender as RadioButton).Content.ToString();
-            int year = int.Parse(content);
+            int year = int.Parse(StripCounter(content));
             UpdateMonthButtons(year);
         }
         private void _Back_bn_Click(object sender, RoutedEventArgs e)
@@ -134,30 +179,27 @@ namespace BillJazzly.Pages
         private void _Open_bn_Click(object sender, RoutedEventArgs e)
         {
             int state = 0;
-            if (SelectedYear() == -1)
-                QuickFix();
             for (int i = 0; i < _Year_stackpanel.Children.Count; i++)
             {
                 if ((_Year_stackpanel.Children[i] as RadioButton).IsChecked == true)
                     state = 1;
             }
             if (state != 1)
-            { SetFeedback("Select a year to continue"); return; } // TODO: Magic cookie
+            { SetFeedback(Short_Keys.Feedback.SelectYear); return; }
             for (int i = 0; i < _Month_stackpanel.Children.Count; i++)
             {
                 if ((_Month_stackpanel.Children[i] as RadioButton).IsChecked == true)
                     state = 2;
             }
             if (state != 2)
-            { SetFeedback("Select a month to continue"); return; } // TODO: Magic cookie
-            SetFeedback("Continue");
+            { SetFeedback(Short_Keys.Feedback.SelectMonth); return; }
             GoToBillPage();
         }
         private void GoToBillPage()
         {
             int year = SelectedYear();
             string month = SelectedMonth();
-            List<RMSBill> bills = null;
+            Tuple<double, List<RMSBill>> bills = null;
             bills = DataHolder.Get.GetBillsFromMonth(year, month);
             BillPage page = new BillPage(year, month, bills);
             this.NavigationService.Navigate(page);
@@ -169,7 +211,11 @@ namespace BillJazzly.Pages
             for (int i = 0; i < _Year_stackpanel.Children.Count; i++)
             {
                 if ((_Year_stackpanel.Children[i] as RadioButton).IsChecked == true)
-                { return int.Parse((_Year_stackpanel.Children[i] as RadioButton).Content.ToString()); }
+                {
+                    string content = ((_Year_stackpanel.Children[i] as RadioButton).Content.ToString());
+                    string[] array = content.Split('(', ')');
+                    return int.Parse(array[0].Trim());
+                }
             }
             return -1;
         }
@@ -185,39 +231,37 @@ namespace BillJazzly.Pages
             for (int i = 0; i < _Month_stackpanel.Children.Count; i++)
             {
                 if ((_Month_stackpanel.Children[i] as RadioButton).IsChecked == true)
-                { return (_Month_stackpanel.Children[i] as RadioButton).Content.ToString(); }
+                {
+                    return StripCounter((_Month_stackpanel.Children[i] as RadioButton).Content.ToString());
+                }
             }
             return null;
-        }
-        private void QuickFix()
-        {
-            (_Year_stackpanel.Children[0] as RadioButton).IsChecked = true;
-            UpdateMonthButtons(int.Parse((_Year_stackpanel.Children[0] as RadioButton).Content.ToString()));
-            (_Month_stackpanel.Children[0] as RadioButton).IsChecked = true;
         }
         private void _Year_plus_bn_Click(object sender, RoutedEventArgs e)
         {
             ShowYearInput();
+            _Year_Input_tx.Focus();
         }
         private void _Year_min_bn_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedYear() < 0)
-            { SetFeedback("First Select a Year"); return; } // TODO: Magic cookie
+            { SetFeedback(Short_Keys.Feedback.SelectYear); return; }
             DataHolder.Get.Bills.Remove(SelectedYear());
             UpdateYearButtons();
         }
         private void _Month_plus_bn_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedYear() < 0)
-            { SetFeedback("First Select a Year"); return; } // TODO: Magic cookie
+            { SetFeedback(Short_Keys.Feedback.SelectYear); return; }
             ShowMonthInput();
+            _Month_Input_tx.Focus();
         }
         private void _Month_min_bn_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedYear() < 0)
-            { SetFeedback("First Select a Year"); return; } // TODO: Magic cookie
+            { SetFeedback(Short_Keys.Feedback.SelectYear); return; }
             if (SelectedMonth() == null)
-            { SetFeedback("First Select a Month"); return; } // TODO: Magic cookie
+            { SetFeedback(Short_Keys.Feedback.SelectMonth); return; }
             DataHolder.Get.Bills[SelectedYear()].Remove(SelectedMonth());
             UpdateMonthButtons(SelectedYear());
         }

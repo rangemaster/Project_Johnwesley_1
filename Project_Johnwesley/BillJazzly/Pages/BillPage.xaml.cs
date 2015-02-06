@@ -26,13 +26,13 @@ namespace BillJazzly.Pages
         private int _SelectedIndex = -1;
         private int _Year = -1;
         private string _Month = null;
-        private List<RMSBill> _Bills = null;
+        private Tuple<double, List<RMSBill>> _Bills = null;
         private bool _ChangesDone = false;
         private bool _PricePressedState = false;
         private bool _NamePressedState = false;
         private bool _DatePressedState = false;
         private bool _DescriptionPressedState = false;
-        public BillPage(int year, string month, List<RMSBill> bills)
+        public BillPage(int year, string month, Tuple<double, List<RMSBill>> bills)
         {
             _Year = year;
             _Month = month;
@@ -57,7 +57,8 @@ namespace BillJazzly.Pages
         private void UpdateBills()
         {
             _Bill_List.Children.Clear();
-            foreach (RMSBill bill in _Bills)
+            _TotalMoney_tx.Text = _Bills.Item1.ToString();
+            foreach (RMSBill bill in _Bills.Item2)
             {
                 Button button = new Button();
                 button.Content = bill.ButtonName();
@@ -76,19 +77,15 @@ namespace BillJazzly.Pages
         }
         private void UpdateChartValues()
         {
+            double totalprice = 0;
             try
-            {
-
-                double totalprice = 0;
-                try
-                { totalprice = double.Parse(_TotalMoney_tx.Text); }
-                catch (FormatException) { return; }
-                double totalCosts = TotalCosts();
-                _TotalCosts_tx.Text = totalCosts.ToString();
-                double totalLeft = totalprice - totalCosts;
-                _TotalLeft_tx.Text = totalLeft.ToString();
-            }
-            catch (NullReferenceException) { Debug.WriteLine("Null reference Update Chart Values"); return; }
+            { totalprice = double.Parse(_TotalMoney_tx.Text); }
+            catch (FormatException) { return; }
+            _Bills = new Tuple<double, List<RMSBill>>(totalprice, _Bills.Item2);
+            double totalCosts = TotalCosts();
+            _TotalCosts_tx.Text = totalCosts.ToString();
+            double totalLeft = totalprice - totalCosts;
+            _TotalLeft_tx.Text = totalLeft.ToString();
         }
         private void ShowButton(object sender, RoutedEventArgs e)
         {
@@ -101,18 +98,18 @@ namespace BillJazzly.Pages
         private int FindBill_int(string billButtonName)
         {
             int index = -1;
-            for (int i = 0; i < _Bills.Count; i++)
-            { if (_Bills[i].ButtonName().Equals(billButtonName)) { index = i; } }
+            for (int i = 0; i < _Bills.Item2.Count; i++)
+            { if (_Bills.Item2[i].ButtonName().Equals(billButtonName)) { index = i; } }
             _SelectedIndex = index;
             return index;
         }
         private RMSBill FindBill_JBill(string billButtonName)
-        { return _Bills[FindBill_int(billButtonName)]; }
+        { return _Bills.Item2[FindBill_int(billButtonName)]; }
         private void ShowFirstBill()
         {
-            if (_Bills.Count > 0)
+            if (_Bills.Item2.Count > 0)
             {
-                ShowBillInfo(_Bills[0]);
+                ShowBillInfo(_Bills.Item2[0]);
                 _SelectedIndex = 0;
             }
         }
@@ -137,9 +134,9 @@ namespace BillJazzly.Pages
             while (amount > 0)
             {
                 amount = 0;
-                for (int lower = 1; lower < _Bills.Count; lower++)
+                for (int lower = 1; lower < _Bills.Item2.Count; lower++)
                 {
-                    if ((_NamePressedState ? _Bills[lower - 1]._Name.CompareTo(_Bills[lower]._Name) > 0 : _Bills[lower - 1]._Name.CompareTo(_Bills[lower]._Name) < 0))
+                    if ((_NamePressedState ? _Bills.Item2[lower - 1]._Name.CompareTo(_Bills.Item2[lower]._Name) > 0 : _Bills.Item2[lower - 1]._Name.CompareTo(_Bills.Item2[lower]._Name) < 0))
                     { Switch(lower - 1, lower); amount++; }
                 }
             }
@@ -151,9 +148,9 @@ namespace BillJazzly.Pages
             while (amount > 0)
             {
                 amount = 0;
-                for (int lower = 1; lower < _Bills.Count; lower++)
+                for (int lower = 1; lower < _Bills.Item2.Count; lower++)
                 {
-                    if (_PricePressedState ? _Bills[lower - 1]._Price < _Bills[lower]._Price : _Bills[lower - 1]._Price > _Bills[lower]._Price)
+                    if (_PricePressedState ? _Bills.Item2[lower - 1]._Price < _Bills.Item2[lower]._Price : _Bills.Item2[lower - 1]._Price > _Bills.Item2[lower]._Price)
                     { Switch(lower - 1, lower); amount++; }
                 }
             }
@@ -165,9 +162,9 @@ namespace BillJazzly.Pages
             while (amount > 0)
             {
                 amount = 0;
-                for (int lower = 1; lower < _Bills.Count; lower++)
+                for (int lower = 1; lower < _Bills.Item2.Count; lower++)
                 {
-                    if (_DatePressedState ? _Bills[lower - 1]._Date.CompareTo(_Bills[lower]._Date) > 0 : _Bills[lower - 1]._Date.CompareTo(_Bills[lower]._Date) < 0)
+                    if (_DatePressedState ? _Bills.Item2[lower - 1]._Date.CompareTo(_Bills.Item2[lower]._Date) > 0 : _Bills.Item2[lower - 1]._Date.CompareTo(_Bills.Item2[lower]._Date) < 0)
                     { Switch(lower - 1, lower); amount++; }
                 }
             }
@@ -180,30 +177,36 @@ namespace BillJazzly.Pages
             while (amount > 0)
             {
                 amount = 0;
-                for (int lower = 1; lower < _Bills.Count; lower++)
+                for (int lower = 1; lower < _Bills.Item2.Count; lower++)
                 {
-                    if (_DatePressedState ? _Bills[lower - 1]._Description.CompareTo(_Bills[lower]._Description) > 0 : _Bills[lower - 1]._Description.CompareTo(_Bills[lower]._Description) < 0)
+                    if (_DatePressedState ? _Bills.Item2[lower - 1]._Description.CompareTo(_Bills.Item2[lower]._Description) > 0 : _Bills.Item2[lower - 1]._Description.CompareTo(_Bills.Item2[lower]._Description) < 0)
                     { Switch(lower - 1, lower); amount++; }
                 }
             }
         }
         private void Switch(int billIndex1, int billIndex2)
         {
-            RMSBill higherBill = _Bills[billIndex1];
-            _Bills[billIndex1] = _Bills[billIndex2];
-            _Bills[billIndex2] = higherBill;
+            RMSBill higherBill = _Bills.Item2[billIndex1];
+            _Bills.Item2[billIndex1] = _Bills.Item2[billIndex2];
+            _Bills.Item2[billIndex2] = higherBill;
         }
         #endregion
 
         #region Money Functions
         private void _TotalMoney_tx_TextChanged(object sender, TextChangedEventArgs e)
         {
-            UpdateChartValues();
+            _ChangesDone = true;
+            try
+            {
+                UpdateChartValues();
+                UpdateButtons();
+            }
+            catch (NullReferenceException) { Debug.WriteLine("Null Reference Exception TextChanged"); }
         }
         private double TotalCosts()
         {
             double costs = 0;
-            foreach (RMSBill bill in _Bills)
+            foreach (RMSBill bill in _Bills.Item2)
             { costs += bill._Price; }
             return costs;
         }
@@ -253,7 +256,7 @@ namespace BillJazzly.Pages
             try
             {
                 RMSBill bill = ToBillConverter(_Name_tx.Text, _Price_tx.Text, _Date_tx.Text, _Description_tx.Text);
-                _Bills.Add(bill);
+                _Bills.Item2.Add(bill);
                 _ChangesDone = true;
                 MakeEditFieldEditable(false);
             }
@@ -264,7 +267,7 @@ namespace BillJazzly.Pages
         private void EditBillInfo()
         {
             RMSBill bill = ToBillConverter(_Name_tx.Text, _Price_tx.Text, _Date_tx.Text, _Description_tx.Text);
-            _Bills[_SelectedIndex] = bill;
+            _Bills.Item2[_SelectedIndex] = bill;
             _ChangesDone = true;
             MakeEditFieldEditable(false);
             UpdateBills();
@@ -274,11 +277,11 @@ namespace BillJazzly.Pages
         {
             try
             {
-                _Bills.RemoveAt(_SelectedIndex);
+                _Bills.Item2.RemoveAt(_SelectedIndex);
                 _ChangesDone = true;
                 MakeEditFieldEditable(false);
             }
-            catch (ArgumentOutOfRangeException) { MessageBox.Show("Remove Bill Info Argument Unknown"); }
+            catch (ArgumentOutOfRangeException) { MessageBox.Show(Short_Keys.MessageBox.BillNotFound); }
             UpdateBills();
             UpdateButtons();
         }

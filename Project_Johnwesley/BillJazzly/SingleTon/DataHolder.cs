@@ -17,38 +17,37 @@ namespace BillJazzly.SingleTon
         private static object _pathlock = new object();
         private Dictionary<string, string> _Accounts = null;
         private Dictionary<string, int> _Settings = null;
-        private Dictionary<int, Dictionary<string, List<RMSBill>>> _Bills = null;
+        private Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>> _Bills = null;
         private string location = "Bin";
         private string account_file = "Data1.bill";
         private string bill_file = "Data2.bill";
+        private string settings_file = "Data3.bill";
         private DataHolder()
         {
             _Accounts = new Dictionary<string, string>();
             _Settings = new Dictionary<string, int>();
-            _Bills = new Dictionary<int, Dictionary<string, List<RMSBill>>>();
+            _Bills = new Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>>();
             LoadBills();
             LoadSettings();
-            InitBills();
+            if (_Bills.Count == 0)
+                InitBills();
         }
         private void InitBills()
         {
-            if (_Bills.Count == 0)
-            {
-                List<RMSBill> list1 = new List<RMSBill>();
-                DateTime date = new DateTime(2015, 02, 07, 16, 30, 00);
-                list1.Add(new RMSBill.Builder().Name("Roel").Description("Here is a long description to test the textwrapping. And to make it interesting it gets even longer. It has to be very long...... longer...... llonger..... asdfa;dbjpaosepowuehpasd;bajkn;sfahpsuhpwauhe veryyyyy long...... even longer").Build());
-                list1.Add(new RMSBill.Builder().Name("Johnwesley").Price(12).Date(date).Description("Example").Build());
-                list1.Add(new RMSBill.Builder().Name("Ashley").Price(13).Description("An other Example").Build());
+            List<RMSBill> list1 = new List<RMSBill>();
+            DateTime date = new DateTime(2015, 02, 07, 16, 30, 00);
+            list1.Add(new RMSBill.Builder().Name("Roel").Description("Here is a long description to test the textwrapping. And to make it interesting it gets even longer. It has to be very long...... longer...... llonger..... asdfa;dbjpaosepowuehpasd;bajkn;sfahpsuhpwauhe veryyyyy long...... even longer").Build());
+            list1.Add(new RMSBill.Builder().Name("Johnwesley").Price(12).Date(date).Description("Example").Build());
+            list1.Add(new RMSBill.Builder().Name("Ashley").Price(13).Description("An other Example").Build());
+            Tuple<double, List<RMSBill>> list = new Tuple<double, List<RMSBill>>(2000, list1);
+            Dictionary<string, Tuple<double, List<RMSBill>>> months1 = new Dictionary<string, Tuple<double, List<RMSBill>>>();
+            months1.Add("Februari", list);
 
-                Dictionary<string, List<RMSBill>> months1 = new Dictionary<string, List<RMSBill>>();
-                months1.Add("Februari", list1);
+            Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>> years = new Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>>();
+            years.Add(2015, months1);
+            _Bills = years;
 
-                Dictionary<int, Dictionary<string, List<RMSBill>>> years = new Dictionary<int, Dictionary<string, List<RMSBill>>>();
-                years.Add(2015, months1);
-                _Bills = years;
-
-                SaveBills();
-            }
+            SaveBills();
         }
         public static DataHolder Get
         {
@@ -108,22 +107,46 @@ namespace BillJazzly.SingleTon
         #region Settings
         public void SaveSettings()
         {
-
+            if (!Directory.Exists(location))
+            { Directory.CreateDirectory(location); }
+            using (StreamWriter writer = new StreamWriter(location + "/" + settings_file))
+            {
+                foreach (string key in _Settings.Keys)
+                { writer.WriteLine(key + " & " + _Settings[key]); }
+            }
         }
         public void LoadSettings()
         {
-            if (_Settings.Count == 0)
+            if (!Directory.Exists(location))
+            { Directory.CreateDirectory(location); }
+            if (File.Exists(location + "/" + settings_file))
+            {
+                _Settings.Clear();
+                using (StreamReader reader = new StreamReader(location + "/" + settings_file))
+                {
+                    while (reader.Peek() >= 0)
+                    {
+                        string line = reader.ReadLine();
+                        string[] array = line.Split('&');
+                        _Settings.Add(array[0].Trim(), int.Parse(array[1].Trim()));
+                    }
+                }
+            }
+            else
             {
                 DefaultSettings();
             }
         }
         public void DefaultSettings()
         {
-            SetSetting("Min_Year", 1900); // Magic cookie
-            SetSetting("Max_Year", 2100); // Magic cookie
-            SetSetting("Volume", 3); // Magic cookie
-            SetSetting("Audio", 0); // Magic cookie
-            SetSetting("Video", 0); // Magic cookie
+            Debug.WriteLine("Default Settings");
+            SetSetting(Short_Keys.Settings.OverView_FontSize, 12);
+            SetSetting(Short_Keys.Settings.Salary, 0);
+            SetSetting(Short_Keys.Settings.Min_Bill_Year, 1900);
+            SetSetting(Short_Keys.Settings.Max_Bill_Year, 2100);
+            SetSetting(Short_Keys.Settings.Volume, 3);
+            SetSetting(Short_Keys.Settings.Audio, 0);
+            SetSetting(Short_Keys.Settings.Video, 0);
             SaveSettings();
         }
         public void SetSetting(string setting_name, int setting_value)
@@ -132,23 +155,27 @@ namespace BillJazzly.SingleTon
             catch (ArgumentException) { throw new ArgumentException(); }
         }
         public int GetSettingsValue(string setting_name)
-        { return _Settings[setting_name]; }
+        { Debug.WriteLine("GetSettingsValue(" + setting_name + ") = " + _Settings[setting_name] + ")"); return _Settings[setting_name]; }
         #endregion
 
         #region Bills
-        public Dictionary<int, Dictionary<string, List<RMSBill>>> Bills
+        public Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>> Bills
         { get { return _Bills; } }
         public RMSBill GetBill(int year, string month, int index)
-        { return _Bills[year][month][index]; }
-        public List<RMSBill> GetBillsFromMonth(int year, string month)
+        { return _Bills[year][month].Item2[index]; }
+        public Tuple<double, List<RMSBill>> GetBillsFromMonth(int year, string month)
         { return _Bills[year][month]; }
-        public Dictionary<string, List<RMSBill>> GetMonthsFromYear(int year)
+        public void SetSalaryOfMonth(int year, string month, double salary)
+        { _Bills[year][month] = new Tuple<double, List<RMSBill>>(salary, _Bills[year][month].Item2); }
+        public double GetSalaryOfMonth(int year, string month)
+        { return _Bills[year][month].Item1; }
+        public Dictionary<string, Tuple<double, List<RMSBill>>> GetMonthsFromYear(int year)
         { return _Bills[year]; }
         public void SortBillsOnYears()
         {
-            List<Tuple<int, Dictionary<string, List<RMSBill>>>> Bill_List = new List<Tuple<int, Dictionary<string, List<RMSBill>>>>();
+            List<Tuple<int, Dictionary<string, Tuple<double, List<RMSBill>>>>> Bill_List = new List<Tuple<int, Dictionary<string, Tuple<double, List<RMSBill>>>>>();
             foreach (int key in _Bills.Keys)
-            { Bill_List.Add(new Tuple<int, Dictionary<string, List<RMSBill>>>(key, _Bills[key])); }
+            { Bill_List.Add(new Tuple<int, Dictionary<string, Tuple<double, List<RMSBill>>>>(key, _Bills[key])); }
             int amount = 1;
             while (amount > 0)
             {
@@ -169,10 +196,6 @@ namespace BillJazzly.SingleTon
             { _Bills.Add(Bill_List[i].Item1, Bill_List[i].Item2); }
             Debug.WriteLine("Sort Bill On Years");
         }
-        public void SortBillsOnMonths()
-        {
-
-        }
         public void SaveBills()
         {
             Debug.WriteLine("Saving Bills");
@@ -183,21 +206,21 @@ namespace BillJazzly.SingleTon
                 foreach (int year in _Bills.Keys)
                 {
                     writer.WriteLine(EnCode("" + year));
-                    Dictionary<string, List<RMSBill>> months = _Bills[year];
+                    Dictionary<string, Tuple<double, List<RMSBill>>> months = _Bills[year];
                     foreach (string month in months.Keys)
                     {
-                        writer.WriteLine(EnCode(month));
-                        List<RMSBill> bills = months[month];
+                        writer.WriteLine(EnCode(month + " " + Short_Keys.Separate.SplitSign + " " + months[month].Item1.ToString()));
+                        List<RMSBill> bills = months[month].Item2;
                         foreach (RMSBill bill in bills)
                         {
                             string line = bill._Name + "-" + bill._Price + "-" + bill._Date + "-" + bill._Description;
                             writer.WriteLine(EnCode(line));
                         }
-                        writer.WriteLine(EnCode("#EndMonth")); // TODO: Magic cookie
+                        writer.WriteLine(EnCode(Short_Keys.ReadWriter.EndMonth));
                     }
-                    writer.WriteLine(EnCode("#EndYear")); // TODO: Magic cookie
+                    writer.WriteLine(EnCode(Short_Keys.ReadWriter.EndYear));
                 }
-                writer.WriteLine(EnCode("#EndBills")); // TODO: Magic cookie
+                writer.WriteLine(EnCode(Short_Keys.ReadWriter.EndBills));
             }
         }
         public void LoadBills()
@@ -210,31 +233,34 @@ namespace BillJazzly.SingleTon
                 int readingState = 1;
                 int year = -1;
                 string month = null;
-                Dictionary<int, Dictionary<string, List<RMSBill>>> yearData = new Dictionary<int, Dictionary<string, List<RMSBill>>>();
-                Dictionary<string, List<RMSBill>> monthData = new Dictionary<string, List<RMSBill>>();
+                Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>> yearData = new Dictionary<int, Dictionary<string, Tuple<double, List<RMSBill>>>>();
+                Dictionary<string, Tuple<double, List<RMSBill>>> monthData = new Dictionary<string, Tuple<double, List<RMSBill>>>();
                 using (StreamReader reader = new StreamReader(location + "/" + bill_file))
                 {
                     List<RMSBill> bills = new List<RMSBill>();
+                    double salary = -1;
+                    if (_Settings.Count > 0)
+                        salary = GetSettingsValue(Short_Keys.Settings.Salary);
                     while (reader.Peek() >= 0)
                     {
                         string line = DeCode(reader.ReadLine()).Trim();
-                        if (line.Equals("#EndBills")) { break; } // TODO: Magic cookie
-                        else if (line.Equals("#EndYear")) // TODO: Magic cookie
+                        if (line.Equals(Short_Keys.ReadWriter.EndBills)) { break; }
+                        else if (line.Equals(Short_Keys.ReadWriter.EndYear))
                         {
                             readingState = 1;
                             if (yearData.ContainsKey(year))
                             { throw new NotSupportedException(); }
                             yearData.Add(year, monthData);
-                            monthData = new Dictionary<string, List<RMSBill>>();
+                            monthData = new Dictionary<string, Tuple<double, List<RMSBill>>>();
                             year = -1;
                         }
-                        else if (line.Equals("#EndMonth")) // TODO: Magic cookie
+                        else if (line.Equals(Short_Keys.ReadWriter.EndMonth))
                         {
                             readingState = 2;
                             if (monthData.ContainsKey(month))
                             { throw new NotSupportedException(); }
-                            monthData.Add(month, bills);
-
+                            monthData.Add(month, new Tuple<double, List<RMSBill>>(salary, bills));
+                            bills = new List<RMSBill>();
                             month = null;
                         }
                         else
@@ -242,7 +268,12 @@ namespace BillJazzly.SingleTon
                             if (readingState == 1)
                             { year = int.Parse(line); readingState = 2; }
                             else if (readingState == 2)
-                            { month = line; readingState = 3; }
+                            {
+                                string[] array = line.Split(Short_Keys.Separate.SplitSign);
+                                month = array[0].Trim();
+                                salary = double.Parse(array[1].Trim());
+                                readingState = 3;
+                            }
                             else
                             {
                                 string[] array = line.Split('-', ' ', ':');
@@ -258,12 +289,8 @@ namespace BillJazzly.SingleTon
                     }
                 }
                 _Bills = yearData;
-                foreach (int y in _Bills.Keys)
-                    foreach (string m in _Bills[y].Keys)
-                        foreach (RMSBill bill in _Bills[y][m])
-                            Debug.WriteLine("Loaded Bill: " + bill.ToString());
             }
-            else { MessageBox.Show("Could not load Old Bills. Something went terrible wrong!"); } // TODO: Magic cookie
+            else { MessageBox.Show(Short_Keys.MessageBox.CouldNotLoadBillFile); }
         }
         #endregion
 
@@ -272,11 +299,13 @@ namespace BillJazzly.SingleTon
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(Text);
             return System.Convert.ToBase64String(plainTextBytes);
+            // return Text;
         }
         public static string DeCode(string Text)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(Text);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            // return Text;
         }
         #endregion
         public static void Log(string line)

@@ -43,8 +43,10 @@
             <TextBlock x:Name="_Title2_tx" Style="{StaticResource TitleStyle}" FontSize="48"/>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel x:Name="_Settings_stackpanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-            </StackPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="450" Width="700">
+                <StackPanel x:Name="_Settings_stackpanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
         <Grid Grid.Row="2">
             <TextBlock x:Name="_Feedback_tb" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" Foreground="Red"/>
