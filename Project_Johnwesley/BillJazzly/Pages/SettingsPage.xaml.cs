@@ -45,9 +45,9 @@ namespace BillJazzly.Pages
             AddSetting(Short_Keys.Settings.Salary, _Input_Salary_tx);
             AddSetting(Short_Keys.Settings.Min_Bill_Year, _Input_Min_Year_tx);
             AddSetting(Short_Keys.Settings.Max_Bill_Year, _Input_Max_Year_tx);
-            AddSetting(Short_Keys.Settings.Volume, _Audio_1_bn, _Audio_2_bn, _Audio_3_bn, _Audio_4_bn, _Audio_5_bn);
-            AddSetting(Short_Keys.Settings.Audio, _Audio_on_bn, _Audio_off_bn);
-            AddSetting(Short_Keys.Settings.Video, _Video_on_bn, _Video_off_bn);
+            //AddSetting(Short_Keys.Settings.Volume + " (beta)", _Audio_1_bn, _Audio_2_bn, _Audio_3_bn, _Audio_4_bn, _Audio_5_bn);
+            //AddSetting(Short_Keys.Settings.Audio + " (beta)", _Audio_on_bn, _Audio_off_bn);
+            //AddSetting(Short_Keys.Settings.Video + " (beta)", _Video_on_bn, _Video_off_bn);
         }
         private void InitFields()
         {

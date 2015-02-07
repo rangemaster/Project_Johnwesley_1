@@ -1,7 +1,7 @@
 ﻿<Page x:Class="BillJazzly.MainPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainPage" Height="600" Width="900">
+        Title="MainPage" Height="500" Width="900">
     <Page.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="200"/>
@@ -25,6 +25,7 @@
         <Grid Grid.Row="0">
             <TextBlock x:Name="_Title_tx1" Text="Bill Jazzly" FontSize="43" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontWeight="Bold"/>
             <TextBlock x:Name="_Title_tx2" Text="Bill Jazzly" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gold"/>
+            <TextBlock x:Name="_Beta_tx" Margin="350,0,0,0" Text="(Beta)" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red"/>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -34,7 +35,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-
+            <TextBlock Text="This is the application for Johnwesley and Ashley. Congratiolations with the new home! Greetings Roel Suntjens" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
         </Grid>
     </Grid>
 </Page>

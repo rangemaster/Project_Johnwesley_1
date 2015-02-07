@@ -41,8 +41,6 @@ namespace BillJazzly
             this.NavigationService.Navigate(page);
         }
         private void _Exit_bn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        { Application.Current.Shutdown(); }
     }
 }

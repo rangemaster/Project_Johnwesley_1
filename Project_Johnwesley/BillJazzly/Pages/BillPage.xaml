@@ -81,13 +81,15 @@
                     <TextBox x:Name="_TotalLeft_tx" Style="{StaticResource TotalField_tx}" IsEnabled="False"/>
                 </StackPanel>
                 <StackPanel x:Name="_List_stackpanel" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="_ABC_Sort" Content="ABC" Style="{StaticResource SortButton}" Click="_ABC_Sort_Click"/>
-                        <Button x:Name="_Price_Sort" Content="$" Style="{StaticResource SortButton}" Click="_Price_Sort_Click"/>
-                        <Button x:Name="_Date_Sort" Content="Date" Style="{StaticResource SortButton}" Click="_Date_Sort_Click"/>
-                        <Button x:Name="_Description_Sort" Content="..." Style="{StaticResource SortButton}" Click="_Description_Sort_Click"/>
+                    <StackPanel Background="White">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,5,5,5">
+                            <Button x:Name="_ABC_Sort" Content="ABC" Style="{StaticResource SortButton}" Click="_ABC_Sort_Click"/>
+                            <Button x:Name="_Price_Sort" Content="$" Style="{StaticResource SortButton}" Click="_Price_Sort_Click"/>
+                            <Button x:Name="_Date_Sort" Content="Date" Style="{StaticResource SortButton}" Click="_Date_Sort_Click"/>
+                            <Button x:Name="_Description_Sort" Content="..." Style="{StaticResource SortButton}" Click="_Description_Sort_Click"/>
+                        </StackPanel>
                     </StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200" Margin="20,10,20,20">
                         <StackPanel x:Name="_Bill_List" Width="150"/>
                     </ScrollViewer>
                 </StackPanel>

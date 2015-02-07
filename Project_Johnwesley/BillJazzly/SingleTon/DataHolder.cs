@@ -112,7 +112,7 @@ namespace BillJazzly.SingleTon
             using (StreamWriter writer = new StreamWriter(location + "/" + settings_file))
             {
                 foreach (string key in _Settings.Keys)
-                { writer.WriteLine(key + " & " + _Settings[key]); }
+                { writer.WriteLine(EnCode(key + " & " + _Settings[key])); }
             }
         }
         public void LoadSettings()
@@ -126,7 +126,7 @@ namespace BillJazzly.SingleTon
                 {
                     while (reader.Peek() >= 0)
                     {
-                        string line = reader.ReadLine();
+                        string line = DeCode(reader.ReadLine());
                         string[] array = line.Split('&');
                         _Settings.Add(array[0].Trim(), int.Parse(array[1].Trim()));
                     }

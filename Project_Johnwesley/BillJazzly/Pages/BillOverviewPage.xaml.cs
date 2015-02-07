@@ -23,6 +23,8 @@ namespace BillJazzly.Pages
     /// </summary>
     public partial class BillOverviewPage : PageFunction<String>
     {
+        private static string[] months_NL = new string[] { "januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december" };
+        private static string[] months_ENG = new string[] { "january", "february", "march", "april", "may", "jun", "july", "august", "september", "october", "november", "december" };
         public BillOverviewPage()
         {
             InitializeComponent();
@@ -31,6 +33,42 @@ namespace BillJazzly.Pages
             _Month_stackpanel.Width = _Main_stackpanel.Width / 2;
             UpdateYearButtons();
             _Feedback_tx.Text = "";
+            SelectCurrentYear();
+            SelectCurrentMonth();
+        }
+        private void SelectCurrentYear()
+        {
+            try
+            {
+                int year = int.Parse(DateTime.Now.ToString("yyyy"));
+                for (int i = 0; i < _Year_stackpanel.Children.Count; i++)
+                {
+                    if ((_Year_stackpanel.Children[i] as RadioButton).Content.ToString().Contains(year.ToString()))
+                    {
+                        Debug.WriteLine("Current Year Found");
+                        (_Year_stackpanel.Children[i] as RadioButton).IsChecked = true;
+                        UpdateMonthButtons(int.Parse(StripCounter((_Year_stackpanel.Children[i] as RadioButton).Content.ToString())));
+                    }
+                }
+            }
+            catch (FormatException) { return; }
+
+        }
+        private void SelectCurrentMonth()
+        {
+            try
+            {
+                int month = int.Parse(DateTime.Now.ToString("MM"));
+                string month_NL = months_NL[month - 1];
+                string month_ENG = months_ENG[month - 1];
+                for (int i = 0; i < _Month_stackpanel.Children.Count; i++)
+                {
+                    string m = (_Month_stackpanel.Children[i] as RadioButton).Content.ToString().ToLower();
+                    if (m.Contains(month_NL) || m.Contains(month_ENG))
+                    { (_Month_stackpanel.Children[i] as RadioButton).IsChecked = true; }
+                }
+            }
+            catch (FormatException) { return; }
         }
         #region Update
         void UpdateYearButtons()
@@ -42,14 +80,13 @@ namespace BillJazzly.Pages
         }
         void UpdateMonthButtons(int year)
         {
+            Debug.WriteLine("Update Month: " + year);
             if (year != -1)
             {
                 ClearMonth_stackpanel();
                 List<string> months = new List<string>();
                 foreach (string month in DataHolder.Get.GetMonthsFromYear(year).Keys)
                 { months.Add(month); }
-                string[] months_NL = new string[] { "januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december" };
-                string[] months_ENG = new string[] { "january", "february", "march", "april", "may", "jun", "july", "august", "september", "october", "november", "december" };
                 int amount = 1;
                 while (amount > 0)
                 {
